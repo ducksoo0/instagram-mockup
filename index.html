@@ -1,786 +1,1086 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Instagram Profile Mockup</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instagram Profile Generator</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+* {
+    box-sizing: border-box;
+}
 
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: #f6f6f6;
-      color: #111;
-    }
+body {
+    margin: 0;
+    background: #f4f4f4;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #0f1419;
+}
+
+.app {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ================================
+   왼쪽 편집창
+================================ */
+
+.editor {
+    width: 270px;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    overflow-y: auto;
+    background: white;
+    border-right: 1px solid #ddd;
+    padding: 20px 16px;
+    flex-shrink: 0;
+}
+
+.editor h1 {
+    font-size: 17px;
+    margin: 0 0 22px;
+}
+
+.section {
+    margin-bottom: 24px;
+}
+
+.section-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .7px;
+    color: #888;
+    margin-bottom: 11px;
+    text-transform: uppercase;
+}
+
+label {
+    font-size: 12px;
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+input,
+textarea {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    padding: 8px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    outline: none;
+}
+
+input:focus,
+textarea:focus {
+    border-color: #999;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 65px;
+}
+
+.stats-inputs {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 6px;
+}
+
+.upload {
+    display: block;
+    border: 1px dashed #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    font-size: 12px;
+    cursor: pointer;
+    background: #fafafa;
+    margin-bottom: 8px;
+}
+
+.upload:hover {
+    background: #f3f3f3;
+}
+
+.upload input {
+    display: none;
+}
+
+.save {
+    width: 100%;
+    border: none;
+    background: #0095f6;
+    color: white;
+    border-radius: 8px;
+    padding: 11px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* ================================
+   오른쪽
+================================ */
+
+.preview-area {
+    flex: 1;
+    padding: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* 실제 저장되는 영역 */
+.instagram {
+    width: 500px;
+    background: white;
+    overflow: hidden;
+    box-shadow: 0 3px 20px rgba(0,0,0,.08);
+}
+
+/* ================================
+   아이폰 상태바
+================================ */
+
+.statusbar {
+    height: 62px;
+    padding: 17px 27px 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    font-weight: 650;
+    font-size: 20px;
+}
+
+.status-icons {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.signal {
+    display: flex;
+    gap: 3px;
+    align-items: flex-end;
+    height: 16px;
+}
+
+.signal span {
+    width: 4px;
+    background: #0f1419;
+    border-radius: 2px;
+}
+
+.signal span:nth-child(1) { height: 6px; }
+.signal span:nth-child(2) { height: 9px; }
+.signal span:nth-child(3) { height: 12px; }
+.signal span:nth-child(4) { height: 16px; }
+
+.wifi {
+    width: 21px;
+    height: 16px;
+    position: relative;
+}
+
+.wifi::before,
+.wifi::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 3px solid #0f1419;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+}
+
+.wifi::before {
+    width: 22px;
+    height: 18px;
+}
+
+.wifi::after {
+    top: 6px;
+    width: 11px;
+    height: 9px;
+}
+
+.battery {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 17px;
+    background: #aaa;
+    border-radius: 6px;
+    font-size: 12px;
+    color: white;
+    font-weight: 700;
+}
+
+/* ================================
+   상단 인스타 버튼
+================================ */
+
+.instagram-nav {
+    height: 77px;
+    padding: 5px 25px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-right {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+}
+
+.svg-icon {
+    width: 29px;
+    height: 29px;
+    stroke: #101418;
+    stroke-width: 2.4;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.plus-icon {
+    width: 30px;
+    height: 30px;
+}
+
+/* ================================
+   프로필
+================================ */
+
+.profile-main {
+    padding: 3px 22px 0;
+}
+
+.profile-row {
+    display: grid;
+    grid-template-columns: 125px 1fr;
+    align-items: center;
+}
+
+.avatar-wrap {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.avatar {
+    width: 112px;
+    height: 112px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #eef0f4;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    text-align: center;
+    gap: 4px;
+}
+
+.stat-number {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 1px;
+}
+
+.stat-label {
+    font-size: 16px;
+    line-height: 1.2;
+}
+
+/* 소개 */
+.bio {
+    padding-top: 15px;
+    font-size: 14px;
+    line-height: 1.35;
+}
+
+.profile-name {
+    font-weight: 650;
+    margin-bottom: 3px;
+}
+
+.bio-text {
+    white-space: pre-line;
+}
+
+.profile-link {
+    font-weight: 600;
+    color: #00376b;
+    margin-top: 3px;
+}
+
+/* ================================
+   Add banners
+================================ */
+
+.banner-row {
+    padding: 19px 22px 16px;
+}
+
+.add-banner {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    border: 1px solid #d6d9dc;
+    border-radius: 22px;
+    padding: 7px 13px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #646b73;
+}
+
+.small-plus {
+    width: 18px;
+    height: 18px;
+    position: relative;
+}
+
+.small-plus::before,
+.small-plus::after {
+    content: "";
+    position: absolute;
+    background: #646b73;
+    border-radius: 3px;
+}
+
+.small-plus::before {
+    width: 16px;
+    height: 2px;
+    left: 1px;
+    top: 8px;
+}
+
+.small-plus::after {
+    width: 2px;
+    height: 16px;
+    left: 8px;
+    top: 1px;
+}
+
+/* ================================
+   버튼
+================================ */
+
+.profile-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
+    padding: 0 22px 18px;
+}
+
+.profile-button {
+    height: 42px;
+    background: #f0f1f4;
+    border-radius: 7px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 650;
+}
+
+/* ================================
+   하이라이트
+================================ */
+
+.highlights {
+    display: flex;
+    gap: 14px;
+    padding: 3px 22px 18px;
+    overflow: hidden;
+}
+
+.highlight {
+    width: 72px;
+    flex-shrink: 0;
+    text-align: center;
+    font-size: 11px;
+}
+
+.highlight img {
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #ddd;
+    padding: 2px;
+    background: white;
+}
+
+.highlight-name {
+    margin-top: 4px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* ================================
+   탭
+================================ */
+
+.tabs {
+    height: 54px;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    align-items: center;
+    border-bottom: 1px solid #efefef;
+}
+
+.tab {
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.tab.active::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: #111;
+}
+
+.grid-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.tag-icon {
+    width: 26px;
+    height: 26px;
+    stroke: #737981;
+}
+
+/* ================================
+   게시물
+================================ */
+
+.posts {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 2px;
+}
+
+.post {
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    background: #f2f2f2;
+}
+
+.post img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* ================================
+   반응형
+================================ */
+
+@media(max-width:800px) {
 
     .app {
-      display: flex;
-      min-height: 100vh;
+        display: block;
     }
 
-    /* 왼쪽 편집 패널 */
     .editor {
-      width: 290px;
-      background: #ffffff;
-      border-right: 1px solid #dddddd;
-      padding: 20px 16px;
-      overflow-y: auto;
-      height: 100vh;
-      position: sticky;
-      top: 0;
+        position: relative;
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid #ddd;
     }
 
-    .editor h1 {
-      font-size: 17px;
-      margin: 0 0 18px;
-      font-weight: 700;
-    }
-
-    .section {
-      margin-bottom: 22px;
-    }
-
-    .section-title {
-      font-size: 12px;
-      color: #777;
-      font-weight: 700;
-      margin-bottom: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    label {
-      display: block;
-      font-size: 12px;
-      margin-bottom: 5px;
-      color: #444;
-    }
-
-    input,
-    textarea {
-      width: 100%;
-      border: 1px solid #d7d7d7;
-      border-radius: 7px;
-      padding: 8px 9px;
-      font-size: 13px;
-      outline: none;
-      background: #fff;
-      margin-bottom: 10px;
-    }
-
-    textarea {
-      min-height: 68px;
-      resize: vertical;
-    }
-
-    input:focus,
-    textarea:focus {
-      border-color: #a5a5a5;
-    }
-
-    .numbers {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 7px;
-    }
-
-    .numbers input {
-      margin-bottom: 0;
-    }
-
-    .upload-box {
-      display: block;
-      border: 1px dashed #cfcfcf;
-      border-radius: 8px;
-      padding: 10px;
-      text-align: center;
-      font-size: 12px;
-      color: #666;
-      cursor: pointer;
-      margin-bottom: 10px;
-      background: #fafafa;
-    }
-
-    .upload-box:hover {
-      background: #f4f4f4;
-    }
-
-    .upload-box input {
-      display: none;
-    }
-
-    .editor button {
-      width: 100%;
-      border: 0;
-      border-radius: 8px;
-      padding: 10px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    .save-button {
-      background: #0095f6;
-      color: white;
-    }
-
-    .save-button:hover {
-      background: #1877f2;
-    }
-
-    /* 오른쪽 미리보기 */
     .preview-area {
-      flex: 1;
-      min-width: 0;
-      padding: 40px;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      overflow-x: auto;
+        padding: 15px;
     }
 
     .instagram {
-      width: 935px;
-      max-width: 100%;
-      background: #fff;
-      min-height: 800px;
-      border: 1px solid #e4e4e4;
+        width: 100%;
+        max-width: 500px;
     }
-
-    .topbar {
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 18px;
-      border-bottom: 1px solid #efefef;
-    }
-
-    .topbar-left,
-    .topbar-right {
-      display: flex;
-      align-items: center;
-      gap: 17px;
-    }
-
-    .topbar .username {
-      font-weight: 700;
-      font-size: 16px;
-    }
-
-    .icon {
-      font-size: 22px;
-      line-height: 1;
-      cursor: default;
-    }
-
-    .profile-area {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      padding: 42px 50px 30px;
-    }
-
-    .avatar-wrap {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-    }
-
-    .avatar {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 1px solid #ddd;
-      background: #eee;
-    }
-
-    .profile-info {
-      padding-top: 4px;
-    }
-
-    .profile-topline {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 24px;
-      flex-wrap: wrap;
-    }
-
-    .profile-username {
-      font-size: 20px;
-      font-weight: 400;
-    }
-
-    .profile-button {
-      background: #efefef;
-      padding: 7px 16px;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    .stats {
-      display: flex;
-      gap: 40px;
-      margin-bottom: 22px;
-      font-size: 16px;
-    }
-
-    .stats span strong {
-      font-weight: 600;
-    }
-
-    .bio-name {
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-
-    .bio-text {
-      font-size: 14px;
-      line-height: 1.45;
-      white-space: pre-line;
-    }
-
-    .bio-link {
-      margin-top: 5px;
-      font-size: 14px;
-      color: #00376b;
-      font-weight: 600;
-    }
-
-    /* 하이라이트 */
-    .highlights {
-      display: flex;
-      gap: 18px;
-      padding: 5px 52px 34px;
-      overflow-x: auto;
-    }
-
-    .highlight {
-      width: 84px;
-      flex: 0 0 auto;
-      text-align: center;
-      font-size: 12px;
-    }
-
-    .highlight-circle {
-      width: 69px;
-      height: 69px;
-      border-radius: 50%;
-      padding: 3px;
-      border: 1px solid #d3d3d3;
-      margin: 0 auto 7px;
-    }
-
-    .highlight-circle img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-      background: #eee;
-    }
-
-    /* 탭 */
-    .tabs {
-      border-top: 1px solid #dbdbdb;
-      height: 53px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 68px;
-    }
-
-    .tab {
-      height: 53px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 12px;
-      letter-spacing: 1px;
-      color: #777;
-    }
-
-    .tab.active {
-      border-top: 1px solid #111;
-      color: #111;
-    }
-
-    /* 게시물 */
-    .posts {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 3px;
-    }
-
-    .post {
-      aspect-ratio: 1 / 1;
-      background: #ededed;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .post img {
-      width: 100%;
-      height: 100%;
-      display: block;
-      object-fit: cover;
-    }
-
-    .placeholder {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #aaa;
-      font-size: 12px;
-    }
-
-    @media (max-width: 900px) {
-      .editor {
-        width: 240px;
-      }
-
-      .preview-area {
-        padding: 20px;
-      }
-
-      .profile-area {
-        grid-template-columns: 180px 1fr;
-        padding: 30px 25px;
-      }
-
-      .avatar {
-        width: 120px;
-        height: 120px;
-      }
-    }
-  </style>
+}
+</style>
 </head>
 
+
 <body>
-  <div class="app">
 
-    <!-- 왼쪽 편집창 -->
-    <aside class="editor">
-      <h1>Instagram Mockup</h1>
+<div class="app">
 
-      <div class="section">
-        <div class="section-title">Profile</div>
+<!-- ================================
+왼쪽 편집창
+================================ -->
 
-        <label>아이디</label>
-        <input id="usernameInput" type="text" value="yourusername" />
+<aside class="editor">
 
-        <label>이름</label>
-        <input id="nameInput" type="text" value="Your Name" />
+<h1>Instagram Mockup</h1>
 
-        <label>소개</label>
-        <textarea id="bioInput">my little archive
+<div class="section">
+
+<div class="section-title">Profile</div>
+
+<label>아이디</label>
+<input id="usernameInput" value="yourusername">
+
+<label>이름</label>
+<input id="nameInput" value="Your Name">
+
+<label>소개</label>
+<textarea id="bioInput">my little archive
 memories & daily life</textarea>
 
-        <label>링크</label>
-        <input id="linkInput" type="text" value="example.com" />
+<label>링크</label>
+<input id="linkInput" value="example.com">
 
-        <label class="upload-box">
-          프로필 사진 업로드
-          <input id="profileUpload" type="file" accept="image/*" />
-        </label>
-      </div>
+<label class="upload">
+프로필 사진 선택
+<input id="profileUpload" type="file" accept="image/*">
+</label>
 
-      <div class="section">
-        <div class="section-title">Stats</div>
-
-        <div class="numbers">
-          <div>
-            <label>게시물</label>
-            <input id="postsCountInput" type="text" value="9" />
-          </div>
-
-          <div>
-            <label>팔로워</label>
-            <input id="followersInput" type="text" value="1,284" />
-          </div>
-
-          <div>
-            <label>팔로잉</label>
-            <input id="followingInput" type="text" value="326" />
-          </div>
-        </div>
-      </div>
-
-      <div class="section">
-        <div class="section-title">Highlights</div>
-
-        <label>하이라이트 이름</label>
-        <input id="highlightNameInput" type="text" value="daily" />
-
-        <label class="upload-box">
-          하이라이트 추가
-          <input id="highlightUpload" type="file" accept="image/*" />
-        </label>
-      </div>
-
-      <div class="section">
-        <div class="section-title">Posts</div>
-
-        <label class="upload-box">
-          게시물 사진 추가
-          <input id="postsUpload" type="file" accept="image/*" multiple />
-        </label>
-      </div>
-
-      <button class="save-button" id="saveButton">
-        PNG 저장
-      </button>
-    </aside>
+</div>
 
 
-    <!-- 오른쪽 미리보기 -->
-    <main class="preview-area">
-      <div class="instagram" id="captureArea">
+<div class="section">
 
-        <div class="topbar">
-          <div class="topbar-left">
-            <span class="icon">‹</span>
-            <span class="username" id="topUsername">yourusername</span>
-          </div>
+<div class="section-title">Stats</div>
 
-          <div class="topbar-right">
-            <span class="icon">⌄</span>
-            <span class="icon">☰</span>
-          </div>
-        </div>
+<div class="stats-inputs">
 
-        <div class="profile-area">
+<div>
+<label>게시물</label>
+<input id="postsCountInput" value="0">
+</div>
 
-          <div class="avatar-wrap">
-            <img
-              id="profileImage"
-              class="avatar"
-              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80"
-              alt=""
-            />
-          </div>
+<div>
+<label>팔로워</label>
+<input id="followersInput" value="0">
+</div>
 
-          <div class="profile-info">
+<div>
+<label>팔로잉</label>
+<input id="followingInput" value="0">
+</div>
 
-            <div class="profile-topline">
-              <span class="profile-username" id="profileUsername">
-                yourusername
-              </span>
+</div>
 
-              <div class="profile-button">
-                프로필 편집
-              </div>
+</div>
 
-              <div class="profile-button">
-                프로필 공유
-              </div>
 
-              <span style="font-size:20px;">⚙</span>
-            </div>
+<div class="section">
 
-            <div class="stats">
-              <span>
-                게시물
-                <strong id="postsCount">9</strong>
-              </span>
+<div class="section-title">Highlights</div>
 
-              <span>
-                팔로워
-                <strong id="followersCount">1,284</strong>
-              </span>
+<label>하이라이트 이름</label>
+<input id="highlightNameInput" value="daily">
 
-              <span>
-                팔로잉
-                <strong id="followingCount">326</strong>
-              </span>
-            </div>
+<label class="upload">
+하이라이트 추가
+<input id="highlightUpload" type="file" accept="image/*">
+</label>
 
-            <div class="bio-name" id="profileName">
-              Your Name
-            </div>
+</div>
 
-            <div class="bio-text" id="profileBio">my little archive
+
+<div class="section">
+
+<div class="section-title">Posts</div>
+
+<label class="upload">
+게시물 사진 추가
+<input id="postsUpload" type="file" accept="image/*" multiple>
+</label>
+
+</div>
+
+<button class="save" id="saveButton">
+PNG 저장
+</button>
+
+</aside>
+
+
+<!-- ================================
+오른쪽 인스타
+================================ -->
+
+<main class="preview-area">
+
+<div class="instagram" id="captureArea">
+
+<!-- 상태바 -->
+
+<div class="statusbar">
+
+<div>11:04</div>
+
+<div class="status-icons">
+
+<div class="signal">
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+</div>
+
+<div class="wifi"></div>
+
+<div class="battery">30</div>
+
+</div>
+
+</div>
+
+
+<!-- 상단 메뉴 -->
+
+<div class="instagram-nav">
+
+<svg class="svg-icon plus-icon" viewBox="0 0 24 24">
+<path d="M12 5v14"></path>
+<path d="M5 12h14"></path>
+</svg>
+
+
+<div class="nav-right">
+
+<svg class="svg-icon" viewBox="0 0 24 24">
+<path d="m8 10 4 4 4-4"></path>
+</svg>
+
+<!-- Threads 느낌 -->
+
+<svg class="svg-icon" viewBox="0 0 24 24">
+<path d="M15.5 8.4c-1-1.2-2.4-1.8-4-1.8-3.1 0-5.4 2.2-5.4 5.4 0 3.5 2.5 5.6 5.6 5.6 2.8 0 5.1-1.7 5.1-4.1 0-2-1.5-3.3-3.8-3.3-2.1 0-3.7 1.2-3.7 2.8 0 1.5 1.2 2.6 2.9 2.6 2.6 0 4.5-1.9 4.5-5.1 0-4.2-2.5-6.7-6.5-6.7"></path>
+</svg>
+
+<svg class="svg-icon" viewBox="0 0 24 24">
+<path d="M4 7h16"></path>
+<path d="M4 12h16"></path>
+<path d="M4 17h16"></path>
+</svg>
+
+</div>
+
+</div>
+
+
+<!-- 프로필 -->
+
+<div class="profile-main">
+
+<div class="profile-row">
+
+<div class="avatar-wrap">
+<img
+id="profileImage"
+class="avatar"
+src="https://placehold.co/300x300/eef0f4/8c939c?text=%2B"
+>
+</div>
+
+
+<div class="stats">
+
+<div>
+<div class="stat-number" id="postsCount">0</div>
+<div class="stat-label">posts</div>
+</div>
+
+<div>
+<div class="stat-number" id="followersCount">0</div>
+<div class="stat-label">followers</div>
+</div>
+
+<div>
+<div class="stat-number" id="followingCount">0</div>
+<div class="stat-label">following</div>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="bio">
+
+<div class="profile-name" id="profileName">
+Your Name
+</div>
+
+<div class="bio-text" id="profileBio">my little archive
 memories & daily life</div>
 
-            <div class="bio-link" id="profileLink">
-              example.com
-            </div>
-
-          </div>
-        </div>
-
-        <div class="highlights" id="highlightsContainer">
-
-          <div class="highlight">
-            <div class="highlight-circle">
-              <img
-                src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=200&q=80"
-                alt=""
-              />
-            </div>
-            daily
-          </div>
-
-          <div class="highlight">
-            <div class="highlight-circle">
-              <img
-                src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=200&q=80"
-                alt=""
-              />
-            </div>
-            coffee
-          </div>
-
-        </div>
-
-        <div class="tabs">
-          <div class="tab active">
-            ▦
-            <span>POSTS</span>
-          </div>
-
-          <div class="tab">
-            ▶
-            <span>REELS</span>
-          </div>
-
-          <div class="tab">
-            ◇
-            <span>TAGGED</span>
-          </div>
-        </div>
-
-        <div class="posts" id="postsContainer">
-
-          <div class="post">
-            <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=80">
-          </div>
-
-          <div class="post">
-            <img src="https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=600&q=80">
-          </div>
+<div class="profile-link" id="profileLink">
+example.com
+</div>
 
-          <div class="post">
-            <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=600&q=80">
-          </div>
+</div>
 
-          <div class="post">
-            <img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=600&q=80">
-          </div>
+</div>
 
-          <div class="post">
-            <img src="https://images.unsplash.com/photo-1504198453319-5ce911bafcde?auto=format&fit=crop&w=600&q=80">
-          </div>
 
-          <div class="post">
-            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80">
-          </div>
+<!-- Add banners -->
 
-          <div class="post">
-            <img src="https://images.unsplash.com/photo-1480497490787-505ec076689f?auto=format&fit=crop&w=600&q=80">
-          </div>
+<div class="banner-row">
 
-          <div class="post">
-            <img src="https://images.unsplash.com/photo-1470246973918-29a93221c455?auto=format&fit=crop&w=600&q=80">
-          </div>
+<div class="add-banner">
 
-          <div class="post">
-            <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=80">
-          </div>
+<div class="small-plus"></div>
 
-        </div>
+Add banners
 
-      </div>
-    </main>
+</div>
 
-  </div>
+</div>
 
 
-  <script>
-    const usernameInput = document.getElementById("usernameInput");
-    const nameInput = document.getElementById("nameInput");
-    const bioInput = document.getElementById("bioInput");
-    const linkInput = document.getElementById("linkInput");
+<!-- 버튼 -->
 
-    const postsCountInput = document.getElementById("postsCountInput");
-    const followersInput = document.getElementById("followersInput");
-    const followingInput = document.getElementById("followingInput");
+<div class="profile-buttons">
 
-    const profileUsername = document.getElementById("profileUsername");
-    const topUsername = document.getElementById("topUsername");
+<div class="profile-button">
+Edit profile
+</div>
 
-    const profileName = document.getElementById("profileName");
-    const profileBio = document.getElementById("profileBio");
-    const profileLink = document.getElementById("profileLink");
+<div class="profile-button">
+Share profile
+</div>
 
-    const postsCount = document.getElementById("postsCount");
-    const followersCount = document.getElementById("followersCount");
-    const followingCount = document.getElementById("followingCount");
+</div>
 
-    usernameInput.addEventListener("input", () => {
-      profileUsername.textContent = usernameInput.value;
-      topUsername.textContent = usernameInput.value;
-    });
 
-    nameInput.addEventListener("input", () => {
-      profileName.textContent = nameInput.value;
-    });
+<!-- 하이라이트 -->
 
-    bioInput.addEventListener("input", () => {
-      profileBio.textContent = bioInput.value;
-    });
+<div class="highlights" id="highlightsContainer">
+</div>
 
-    linkInput.addEventListener("input", () => {
-      profileLink.textContent = linkInput.value;
-    });
 
-    postsCountInput.addEventListener("input", () => {
-      postsCount.textContent = postsCountInput.value;
-    });
+<!-- 탭 -->
 
-    followersInput.addEventListener("input", () => {
-      followersCount.textContent = followersInput.value;
-    });
+<div class="tabs">
 
-    followingInput.addEventListener("input", () => {
-      followingCount.textContent = followingInput.value;
-    });
+<div class="tab active">
 
+<svg class="grid-icon" viewBox="0 0 24 24" fill="#101418">
 
-    /* 프로필 사진 */
-    const profileUpload = document.getElementById("profileUpload");
-    const profileImage = document.getElementById("profileImage");
+<rect x="3" y="3" width="5" height="5" rx="1"></rect>
+<rect x="10" y="3" width="5" height="5" rx="1"></rect>
+<rect x="17" y="3" width="5" height="5" rx="1"></rect>
 
-    profileUpload.addEventListener("change", () => {
-      const file = profileUpload.files[0];
+<rect x="3" y="10" width="5" height="5" rx="1"></rect>
+<rect x="10" y="10" width="5" height="5" rx="1"></rect>
+<rect x="17" y="10" width="5" height="5" rx="1"></rect>
 
-      if (!file) return;
+<rect x="3" y="17" width="5" height="5" rx="1"></rect>
+<rect x="10" y="17" width="5" height="5" rx="1"></rect>
+<rect x="17" y="17" width="5" height="5" rx="1"></rect>
 
-      const reader = new FileReader();
+</svg>
 
-      reader.onload = e => {
-        profileImage.src = e.target.result;
-      };
+</div>
 
-      reader.readAsDataURL(file);
-    });
 
+<div class="tab">
 
-    /* 게시물 */
-    const postsUpload = document.getElementById("postsUpload");
-    const postsContainer = document.getElementById("postsContainer");
+<svg class="tag-icon" viewBox="0 0 24 24" fill="none" stroke-width="2">
 
-    postsUpload.addEventListener("change", () => {
+<rect x="4" y="3" width="16" height="18" rx="4"></rect>
 
-      const files = Array.from(postsUpload.files);
+<circle cx="12" cy="10" r="3"></circle>
 
-      if (!files.length) return;
+<path d="M7.5 18c1.1-2 2.6-3 4.5-3s3.4 1 4.5 3"></path>
 
-      postsContainer.innerHTML = "";
+</svg>
 
-      files.forEach(file => {
+</div>
 
-        const reader = new FileReader();
+</div>
 
-        reader.onload = e => {
 
-          const post = document.createElement("div");
-          post.className = "post";
+<!-- 게시물 -->
 
-          const img = document.createElement("img");
-          img.src = e.target.result;
+<div class="posts" id="postsContainer">
+</div>
 
-          post.appendChild(img);
-          postsContainer.appendChild(post);
 
-        };
+</div>
 
-        reader.readAsDataURL(file);
+</main>
 
-      });
+</div>
 
-      postsCountInput.value = files.length;
-      postsCount.textContent = files.length;
 
-    });
 
+<script>
 
-    /* 하이라이트 */
-    const highlightUpload = document.getElementById("highlightUpload");
-    const highlightNameInput = document.getElementById("highlightNameInput");
-    const highlightsContainer = document.getElementById("highlightsContainer");
+/* ================================
+텍스트 입력
+================================ */
 
-    highlightUpload.addEventListener("change", () => {
+const usernameInput =
+document.getElementById("usernameInput");
 
-      const file = highlightUpload.files[0];
+const nameInput =
+document.getElementById("nameInput");
 
-      if (!file) return;
+const bioInput =
+document.getElementById("bioInput");
 
-      const reader = new FileReader();
+const linkInput =
+document.getElementById("linkInput");
 
-      reader.onload = e => {
+const postsCountInput =
+document.getElementById("postsCountInput");
 
-        const item = document.createElement("div");
-        item.className = "highlight";
+const followersInput =
+document.getElementById("followersInput");
 
-        const circle = document.createElement("div");
-        circle.className = "highlight-circle";
+const followingInput =
+document.getElementById("followingInput");
 
-        const img = document.createElement("img");
-        img.src = e.target.result;
 
-        circle.appendChild(img);
+const profileName =
+document.getElementById("profileName");
 
-        const name = document.createElement("div");
-        name.textContent =
-          highlightNameInput.value || "highlight";
+const profileBio =
+document.getElementById("profileBio");
 
-        item.appendChild(circle);
-        item.appendChild(name);
+const profileLink =
+document.getElementById("profileLink");
 
-        highlightsContainer.appendChild(item);
+const postsCount =
+document.getElementById("postsCount");
 
-      };
+const followersCount =
+document.getElementById("followersCount");
 
-      reader.readAsDataURL(file);
+const followingCount =
+document.getElementById("followingCount");
 
-    });
 
+nameInput.addEventListener("input",()=>{
+profileName.textContent=nameInput.value;
+});
 
-    /* PNG 저장 */
-    document.getElementById("saveButton")
-      .addEventListener("click", async () => {
+bioInput.addEventListener("input",()=>{
+profileBio.textContent=bioInput.value;
+});
 
-        const captureArea =
-          document.getElementById("captureArea");
+linkInput.addEventListener("input",()=>{
 
-        const canvas = await html2canvas(captureArea, {
-          scale: 2,
-          backgroundColor: "#ffffff",
-          useCORS: true
-        });
+profileLink.textContent=linkInput.value;
 
-        const link = document.createElement("a");
+profileLink.style.display =
+linkInput.value ? "block":"none";
 
-        link.download =
-          `${usernameInput.value || "instagram-profile"}.png`;
+});
 
-        link.href = canvas.toDataURL("image/png");
+postsCountInput.addEventListener("input",()=>{
+postsCount.textContent=postsCountInput.value;
+});
 
-        link.click();
+followersInput.addEventListener("input",()=>{
+followersCount.textContent=followersInput.value;
+});
 
-      });
-  </script>
+followingInput.addEventListener("input",()=>{
+followingCount.textContent=followingInput.value;
+});
+
+
+/* ================================
+프로필 사진
+================================ */
+
+const profileUpload =
+document.getElementById("profileUpload");
+
+const profileImage =
+document.getElementById("profileImage");
+
+
+profileUpload.addEventListener("change",()=>{
+
+const file=profileUpload.files[0];
+
+if(!file) return;
+
+const reader=new FileReader();
+
+reader.onload=e=>{
+profileImage.src=e.target.result;
+};
+
+reader.readAsDataURL(file);
+
+});
+
+
+/* ================================
+하이라이트
+================================ */
+
+const highlightUpload =
+document.getElementById("highlightUpload");
+
+const highlightNameInput =
+document.getElementById("highlightNameInput");
+
+const highlightsContainer =
+document.getElementById("highlightsContainer");
+
+
+highlightUpload.addEventListener("change",()=>{
+
+const file=highlightUpload.files[0];
+
+if(!file) return;
+
+const reader=new FileReader();
+
+reader.onload=e=>{
+
+const highlight=
+document.createElement("div");
+
+highlight.className="highlight";
+
+
+const image=
+document.createElement("img");
+
+image.src=e.target.result;
+
+
+const name=
+document.createElement("div");
+
+name.className="highlight-name";
+
+name.textContent=
+highlightNameInput.value || "highlight";
+
+
+highlight.appendChild(image);
+highlight.appendChild(name);
+
+highlightsContainer.appendChild(highlight);
+
+};
+
+reader.readAsDataURL(file);
+
+});
+
+
+/* ================================
+게시물
+================================ */
+
+const postsUpload =
+document.getElementById("postsUpload");
+
+const postsContainer =
+document.getElementById("postsContainer");
+
+
+postsUpload.addEventListener("change",()=>{
+
+const files=
+Array.from(postsUpload.files);
+
+if(!files.length) return;
+
+postsContainer.innerHTML="";
+
+
+files.forEach(file=>{
+
+const reader=new FileReader();
+
+reader.onload=e=>{
+
+const post=
+document.createElement("div");
+
+post.className="post";
+
+
+const img=
+document.createElement("img");
+
+img.src=e.target.result;
+
+
+post.appendChild(img);
+
+postsContainer.appendChild(post);
+
+};
+
+reader.readAsDataURL(file);
+
+});
+
+
+postsCountInput.value=files.length;
+postsCount.textContent=files.length;
+
+});
+
+
+/* ================================
+PNG 저장
+================================ */
+
+document
+.getElementById("saveButton")
+.addEventListener("click",async()=>{
+
+const target=
+document.getElementById("captureArea");
+
+const canvas=
+await html2canvas(target,{
+scale:3,
+backgroundColor:"#ffffff",
+useCORS:true
+});
+
+const link=
+document.createElement("a");
+
+link.download=
+`${usernameInput.value || "instagram-profile"}.png`;
+
+link.href=
+canvas.toDataURL("image/png");
+
+link.click();
+
+});
+
+</script>
 
 </body>
 </html>
