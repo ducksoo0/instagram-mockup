@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Instagram Profile Generator</title>
 
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
@@ -16,8 +15,7 @@
 body {
     margin: 0;
     background: #f5f5f5;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, Helvetica, Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     color: #0f1419;
 }
 
@@ -26,37 +24,41 @@ body {
     min-height: 100vh;
 }
 
-/* =====================================================
+/* =========================
    왼쪽 편집창
-===================================================== */
+========================= */
 
 .editor {
-    width: 290px;
+    width: 310px;
     height: 100vh;
     position: sticky;
     top: 0;
     overflow-y: auto;
     flex-shrink: 0;
-    background: #fff;
-    border-right: 1px solid #ddd;
-    padding: 20px 16px 30px;
+    background: #ffffff;
+    border-right: 1px solid #dddddd;
+    padding: 20px 16px 32px;
 }
 
 .editor h1 {
-    font-size: 17px;
-    margin: 0 0 22px;
+    font-size: 18px;
+    margin: 0 0 18px;
 }
 
-.section {
-    margin-bottom: 25px;
+.editor-section {
+    border: 1px solid #ececec;
+    border-radius: 12px;
+    padding: 13px 12px 12px;
+    margin-bottom: 16px;
+    background: #fff;
 }
 
 .section-title {
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 700;
-    letter-spacing: .7px;
-    color: #888;
-    margin-bottom: 11px;
+    letter-spacing: .4px;
+    color: #444;
+    margin-bottom: 12px;
     text-transform: uppercase;
 }
 
@@ -65,23 +67,24 @@ label {
     font-size: 12px;
     color: #555;
     margin-bottom: 5px;
+    font-weight: 600;
 }
 
 input,
 textarea {
     width: 100%;
     border: 1px solid #ddd;
-    border-radius: 7px;
-    padding: 8px;
-    margin-bottom: 9px;
+    border-radius: 8px;
+    padding: 9px 10px;
+    margin-bottom: 10px;
     font-size: 13px;
-    background: white;
+    background: #fff;
     outline: none;
 }
 
 textarea {
+    min-height: 68px;
     resize: vertical;
-    min-height: 64px;
 }
 
 input:focus,
@@ -92,21 +95,21 @@ textarea:focus {
 .stats-inputs {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
+    gap: 7px;
 }
-
-/* 업로드 */
 
 .upload {
     display: block;
-    border: 1px dashed #cfcfcf;
-    border-radius: 8px;
-    padding: 10px;
+    border: 1px dashed #cccccc;
+    border-radius: 9px;
+    padding: 11px;
     text-align: center;
     font-size: 12px;
+    color: #555;
     cursor: pointer;
     background: #fafafa;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
+    font-weight: 600;
 }
 
 .upload:hover {
@@ -117,21 +120,26 @@ textarea:focus {
     display: none;
 }
 
-/* 기본 버튼 */
+.helper {
+    font-size: 11px;
+    color: #888;
+    line-height: 1.45;
+    margin-top: -2px;
+}
 
 .editor-button {
     width: 100%;
     border: none;
     border-radius: 8px;
-    padding: 9px 10px;
-    cursor: pointer;
+    padding: 10px;
     font-size: 12px;
-    font-weight: 650;
+    font-weight: 700;
+    cursor: pointer;
     background: #efefef;
     color: #111;
 }
 
-.blue-button {
+.save-button {
     background: #0095f6;
     color: white;
 }
@@ -142,13 +150,11 @@ textarea:focus {
     color: #ed4956;
 }
 
-/* 토글 */
-
 .toggle-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid #e2e2e2;
+    border: 1px solid #e3e3e3;
     border-radius: 9px;
     padding: 10px;
     margin-bottom: 12px;
@@ -169,7 +175,7 @@ textarea:focus {
     position: absolute;
     inset: 0;
     background: #d4d4d4;
-    border-radius: 30px;
+    border-radius: 999px;
     cursor: pointer;
     transition: .2s;
 }
@@ -195,28 +201,53 @@ textarea:focus {
     transform: translateX(17px);
 }
 
-/* =====================================================
-   사진 조정
-===================================================== */
+.banner-editor-row {
+    padding: 9px 0;
+    border-bottom: 1px solid #eeeeee;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 8px;
+}
+
+.banner-editor-row:last-child {
+    border-bottom: none;
+}
+
+.banner-editor-text {
+    font-size: 12px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.banner-delete {
+    border: none;
+    background: none;
+    color: #ed4956;
+    font-size: 12px;
+    cursor: pointer;
+    font-weight: 700;
+}
 
 .photo-editor-box {
-    border: 1px solid #e1e1e1;
+    border: 1px solid #e5e5e5;
     border-radius: 10px;
-    padding: 11px;
     background: #fafafa;
+    padding: 12px;
 }
 
 .selected-photo-name {
     font-size: 12px;
     font-weight: 700;
-    margin-bottom: 11px;
+    margin-bottom: 10px;
 }
 
 .photo-help {
-    color: #888;
     font-size: 11px;
+    color: #888;
     line-height: 1.45;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 .range-row {
@@ -241,50 +272,9 @@ input[type="range"] {
     border: none;
 }
 
-/* =====================================================
-   음악 배너 편집
-===================================================== */
-
-.banner-editor-row {
-    padding: 8px 0;
-    border-bottom: 1px solid #eee;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    gap: 7px;
-}
-
-.banner-editor-text {
-    font-size: 11px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.banner-delete {
-    border: none;
-    background: none;
-    color: #ed4956;
-    font-size: 11px;
-    cursor: pointer;
-}
-
-/* 저장 */
-
-.save {
-    width: 100%;
-    border: none;
-    border-radius: 8px;
-    background: #0095f6;
-    color: white;
-    padding: 11px;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-/* =====================================================
-   오른쪽
-===================================================== */
+/* =========================
+   오른쪽 미리보기
+========================= */
 
 .preview-area {
     flex: 1;
@@ -296,14 +286,14 @@ input[type="range"] {
 
 .instagram {
     width: 500px;
-    background: white;
+    background: #ffffff;
     overflow: hidden;
     box-shadow: 0 3px 20px rgba(0,0,0,.08);
 }
 
-/* =====================================================
-   상단
-===================================================== */
+/* =========================
+   상단 바
+========================= */
 
 .instagram-nav {
     height: 68px;
@@ -363,9 +353,9 @@ input[type="range"] {
     stroke-width: 2.6;
 }
 
-/* =====================================================
+/* =========================
    이미지 공통
-===================================================== */
+========================= */
 
 .image-frame {
     position: relative;
@@ -374,13 +364,14 @@ input[type="range"] {
 }
 
 .adjustable-image {
-    position: absolute;
     width: 100%;
     height: 100%;
-    left: 0;
-    top: 0;
     object-fit: cover;
-    transform-origin: center;
+    object-position: 50% 50%;
+    transform: scale(1);
+    transform-origin: center center;
+    display: block;
+    user-select: none;
     pointer-events: none;
 }
 
@@ -389,9 +380,9 @@ input[type="range"] {
     outline-offset: -2px;
 }
 
-/* =====================================================
-   프로필
-===================================================== */
+/* =========================
+   프로필 영역
+========================= */
 
 .profile-main {
     padding: 3px 22px 0;
@@ -403,11 +394,16 @@ input[type="range"] {
     align-items: center;
 }
 
+.avatar-wrap {
+    display: flex;
+    justify-content: flex-start;
+}
+
 .avatar-frame {
     width: 112px;
     height: 112px;
     border-radius: 50%;
-    background: #eef0f4;
+    background: #eceff3;
 }
 
 .avatar-frame img {
@@ -452,24 +448,23 @@ input[type="range"] {
     font-weight: 600;
 }
 
-/* =====================================================
+/* =========================
    음악 배너
-===================================================== */
+========================= */
 
-.banner-row {
+.music-banner-row {
     padding: 17px 22px 15px;
-    display: flex;
+    display: none;
     gap: 9px;
     overflow-x: auto;
     scrollbar-width: none;
 }
 
-.banner-row::-webkit-scrollbar {
+.music-banner-row::-webkit-scrollbar {
     display: none;
 }
 
-.music-banner,
-.add-banner {
+.music-banner {
     height: 38px;
     border: 1px solid #d6d9dc;
     border-radius: 22px;
@@ -477,12 +472,9 @@ input[type="range"] {
     align-items: center;
     flex-shrink: 0;
     background: white;
-}
-
-.music-banner {
     padding: 0 15px 0 12px;
     gap: 8px;
-    max-width: 315px;
+    max-width: 320px;
 }
 
 .music-play {
@@ -510,49 +502,13 @@ input[type="range"] {
 }
 
 .music-artist {
-    font-weight: 400;
     margin-left: 5px;
+    font-weight: 400;
 }
 
-.add-banner {
-    padding: 0 14px;
-    gap: 7px;
-    font-size: 14px;
-    font-weight: 600;
-    color: #777e87;
-}
-
-.small-plus {
-    width: 19px;
-    height: 19px;
-    position: relative;
-}
-
-.small-plus::before,
-.small-plus::after {
-    content: "";
-    position: absolute;
-    background: #777e87;
-    border-radius: 3px;
-}
-
-.small-plus::before {
-    width: 17px;
-    height: 2px;
-    left: 1px;
-    top: 8px;
-}
-
-.small-plus::after {
-    width: 2px;
-    height: 17px;
-    left: 8px;
-    top: 1px;
-}
-
-/* =====================================================
-   Edit profile
-===================================================== */
+/* =========================
+   버튼
+========================= */
 
 .profile-buttons {
     display: grid;
@@ -570,11 +526,14 @@ input[type="range"] {
     border-radius: 7px;
     font-size: 16px;
     font-weight: 650;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-/* =====================================================
+/* =========================
    하이라이트
-===================================================== */
+========================= */
 
 .highlights-wrapper {
     padding-top: 20px;
@@ -615,7 +574,6 @@ input[type="range"] {
     height: 100%;
     border-radius: 50%;
     overflow: hidden;
-    position: relative;
 }
 
 .highlight-inner img {
@@ -642,15 +600,15 @@ input[type="range"] {
     font-weight: 300;
 }
 
-/* =====================================================
-   3개 탭
-===================================================== */
+/* =========================
+   탭
+========================= */
 
 .tabs {
     height: 58px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #eeeeee;
 }
 
 .tab {
@@ -675,7 +633,6 @@ input[type="range"] {
     height: 25px;
 }
 
-/* 가운데 릴스 */
 .reels-icon {
     width: 29px;
     height: 29px;
@@ -694,13 +651,13 @@ input[type="range"] {
     fill: none;
 }
 
-/* =====================================================
+/* =========================
    게시물
-===================================================== */
+========================= */
 
 .posts {
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 2px;
 }
 
@@ -709,11 +666,11 @@ input[type="range"] {
     background: #f2f2f2;
 }
 
-/* =====================================================
-   모바일
-===================================================== */
+/* =========================
+   반응형
+========================= */
 
-@media(max-width:800px) {
+@media (max-width: 800px) {
     .app {
         display: block;
     }
@@ -742,470 +699,380 @@ input[type="range"] {
 
 <div class="app">
 
-<!-- =====================================================
-     편집창
-===================================================== -->
+    <!-- 왼쪽 편집창 -->
+    <aside class="editor">
 
-<aside class="editor">
+        <h1>Instagram Mockup</h1>
 
-<h1>Instagram Mockup</h1>
+        <div class="editor-section">
+            <div class="section-title">기본 정보</div>
 
-<div class="section">
-    <div class="section-title">Profile</div>
+            <label>아이디</label>
+            <input id="usernameInput" value="yourusername">
 
-    <label>아이디</label>
-    <input id="usernameInput" value="yourusername">
+            <label>이름</label>
+            <input id="nameInput" value="Your Name">
 
-    <label>이름</label>
-    <input id="nameInput" value="Your Name">
-
-    <label>소개</label>
-    <textarea id="bioInput">my little archive
+            <label>소개</label>
+            <textarea id="bioInput">my little archive
 memories & daily life</textarea>
 
-    <label>링크</label>
-    <input id="linkInput" value="example.com">
-
-    <label class="upload">
-        프로필 사진 선택
-        <input id="profileUpload" type="file" accept="image/*">
-    </label>
-</div>
-
-<div class="section">
-    <div class="section-title">Stats</div>
-
-    <div class="stats-inputs">
-
-        <div>
-            <label>게시물</label>
-            <input id="postsCountInput" value="0">
+            <label>링크</label>
+            <input id="linkInput" value="example.com">
         </div>
 
-        <div>
-            <label>팔로워</label>
-            <input id="followersInput" value="0">
+        <div class="editor-section">
+            <div class="section-title">프로필 사진</div>
+
+            <label class="upload">
+                프로필 사진 선택
+                <input id="profileUpload" type="file" accept="image/*">
+            </label>
+
+            <div class="helper">
+                프로필 사진을 바꾸려면 여기서 업로드하면 돼. 업로드 후 오른쪽 사진을 눌러 위치와 확대를 조절할 수 있어.
+            </div>
         </div>
 
-        <div>
-            <label>팔로잉</label>
-            <input id="followingInput" value="0">
+        <div class="editor-section">
+            <div class="section-title">통계</div>
+
+            <div class="stats-inputs">
+                <div>
+                    <label>게시물</label>
+                    <input id="postsCountInput" value="0">
+                </div>
+
+                <div>
+                    <label>팔로워</label>
+                    <input id="followersInput" value="0">
+                </div>
+
+                <div>
+                    <label>팔로잉</label>
+                    <input id="followingInput" value="0">
+                </div>
+            </div>
         </div>
 
-    </div>
-</div>
+        <div class="editor-section">
+            <div class="section-title">프로필 버튼 문구</div>
 
-<!-- 음악 배너 -->
+            <label>Edit profile 버튼</label>
+            <input id="editButtonInput" placeholder="비워두면 Edit profile">
 
-<div class="section">
-    <div class="section-title">Music Banner</div>
-
-    <label>노래 제목</label>
-    <input id="songTitleInput" placeholder="Film Love">
-
-    <label>가수</label>
-    <input id="songArtistInput" placeholder="J_ust">
-
-    <button class="editor-button" id="addMusicButton">
-        음악 배너 추가
-    </button>
-
-    <div id="musicEditorList"></div>
-</div>
-
-<!-- 하이라이트 -->
-
-<div class="section">
-
-    <div class="section-title">Highlights</div>
-
-    <div class="toggle-row">
-
-        <span>하이라이트 표시</span>
-
-        <label class="switch">
-            <input type="checkbox" id="highlightToggle" checked>
-            <span class="slider"></span>
-        </label>
-
-    </div>
-
-    <div id="highlightEditor">
-
-        <label>하이라이트 이름</label>
-        <input id="highlightNameInput" placeholder="daily">
-
-        <label class="upload">
-            하이라이트 추가
-            <input id="highlightUpload" type="file" accept="image/*">
-        </label>
-
-    </div>
-
-</div>
-
-<!-- 게시물 -->
-
-<div class="section">
-
-    <div class="section-title">Posts</div>
-
-    <label class="upload">
-        게시물 사진 추가
-        <input id="postsUpload" type="file" accept="image/*" multiple>
-    </label>
-
-</div>
-
-<!-- 사진 위치 편집 -->
-
-<div class="section">
-
-    <div class="section-title">Photo Adjustment</div>
-
-    <div class="photo-editor-box">
-
-        <div class="selected-photo-name" id="selectedPhotoName">
-            선택된 사진 없음
+            <label>Share profile 버튼</label>
+            <input id="shareButtonInput" placeholder="비워두면 Share profile">
         </div>
 
-        <div class="photo-help">
-            오른쪽의 프로필 사진, 하이라이트 또는 게시물 사진을 누르면 여기서 위치와 확대 정도를 조절할 수 있어.
+        <div class="editor-section">
+            <div class="section-title">음악 배너</div>
+
+            <label>노래 제목</label>
+            <input id="songTitleInput" placeholder="Film Love">
+
+            <label>가수</label>
+            <input id="songArtistInput" placeholder="J_ust">
+
+            <button class="editor-button" id="addMusicButton" type="button">
+                음악 배너 추가
+            </button>
+
+            <div id="musicEditorList" style="margin-top:8px;"></div>
         </div>
 
-        <div class="range-row">
+        <div class="editor-section">
+            <div class="section-title">하이라이트</div>
 
-            <div class="range-head">
-                <span>확대</span>
-                <span class="range-value" id="zoomValue">100%</span>
+            <div class="toggle-row">
+                <span>하이라이트 표시</span>
+
+                <label class="switch">
+                    <input type="checkbox" id="highlightToggle" checked>
+                    <span class="slider"></span>
+                </label>
             </div>
 
-            <input
-                id="zoomSlider"
-                type="range"
-                min="100"
-                max="300"
-                value="100"
-                disabled
-            >
+            <div id="highlightEditor">
+                <label>하이라이트 이름</label>
+                <input id="highlightNameInput" placeholder="daily">
 
-        </div>
-
-        <div class="range-row">
-
-            <div class="range-head">
-                <span>가로 위치</span>
-                <span class="range-value" id="xValue">0</span>
+                <label class="upload">
+                    하이라이트 사진 추가
+                    <input id="highlightUpload" type="file" accept="image/*">
+                </label>
             </div>
-
-            <input
-                id="xSlider"
-                type="range"
-                min="-100"
-                max="100"
-                value="0"
-                disabled
-            >
-
         </div>
 
-        <div class="range-row">
+        <div class="editor-section">
+            <div class="section-title">게시물 사진</div>
 
-            <div class="range-head">
-                <span>세로 위치</span>
-                <span class="range-value" id="yValue">0</span>
+            <label class="upload">
+                게시물 사진 추가
+                <input id="postsUpload" type="file" accept="image/*" multiple>
+            </label>
+
+            <div class="helper">
+                여러 장을 한꺼번에 추가할 수 있어. 오른쪽 게시물 사진을 눌러 위치와 확대를 조절할 수 있어.
             </div>
-
-            <input
-                id="ySlider"
-                type="range"
-                min="-100"
-                max="100"
-                value="0"
-                disabled
-            >
-
         </div>
 
-        <button
-            class="editor-button"
-            id="resetPhotoButton"
-            disabled
-        >
-            사진 위치 초기화
+        <div class="editor-section">
+            <div class="section-title">사진 위치 조정</div>
+
+            <div class="photo-editor-box">
+
+                <div class="selected-photo-name" id="selectedPhotoName">
+                    선택된 사진 없음
+                </div>
+
+                <div class="photo-help">
+                    오른쪽 미리보기에서 프로필 사진, 하이라이트, 게시물 사진을 누른 뒤 여기서 확대와 위치를 바꿔.
+                </div>
+
+                <div class="range-row">
+                    <div class="range-head">
+                        <span>확대</span>
+                        <span class="range-value" id="zoomValue">100%</span>
+                    </div>
+
+                    <input
+                        id="zoomSlider"
+                        type="range"
+                        min="100"
+                        max="300"
+                        value="100"
+                        disabled
+                    >
+                </div>
+
+                <div class="range-row">
+                    <div class="range-head">
+                        <span>가로 위치</span>
+                        <span class="range-value" id="xValue">0</span>
+                    </div>
+
+                    <input
+                        id="xSlider"
+                        type="range"
+                        min="-50"
+                        max="50"
+                        value="0"
+                        disabled
+                    >
+                </div>
+
+                <div class="range-row">
+                    <div class="range-head">
+                        <span>세로 위치</span>
+                        <span class="range-value" id="yValue">0</span>
+                    </div>
+
+                    <input
+                        id="ySlider"
+                        type="range"
+                        min="-50"
+                        max="50"
+                        value="0"
+                        disabled
+                    >
+                </div>
+
+                <button
+                    class="editor-button"
+                    id="resetPhotoButton"
+                    type="button"
+                    disabled
+                >
+                    사진 위치 초기화
+                </button>
+
+                <button
+                    class="editor-button danger-button"
+                    id="deletePhotoButton"
+                    type="button"
+                    disabled
+                    style="margin-top:7px;"
+                >
+                    선택한 사진 삭제
+                </button>
+            </div>
+        </div>
+
+        <button class="editor-button save-button" id="saveButton" type="button">
+            PNG 저장
         </button>
 
-        <button
-            class="editor-button danger-button"
-            id="deletePhotoButton"
-            disabled
-            style="margin-top:7px;"
-        >
-            선택한 사진 삭제
-        </button>
+    </aside>
 
-    </div>
+    <!-- 오른쪽 미리보기 -->
+    <main class="preview-area">
 
-</div>
+        <div class="instagram" id="captureArea">
 
-<button class="save" id="saveButton">
-    PNG 저장
-</button>
+            <!-- 상단 -->
+            <div class="instagram-nav">
 
-</aside>
+                <div class="nav-left">
+                    <svg class="svg-icon plus-icon" viewBox="0 0 24 24">
+                        <path d="M12 5v14"></path>
+                        <path d="M5 12h14"></path>
+                    </svg>
+                </div>
 
-<!-- =====================================================
-     미리보기
-===================================================== -->
+                <div class="nav-center">
+                    <div class="nav-username" id="topUsername">yourusername</div>
 
-<main class="preview-area">
+                    <svg class="svg-icon arrow-icon" viewBox="0 0 24 24">
+                        <path d="m7 9 5 5 5-5"></path>
+                    </svg>
+                </div>
 
-<div class="instagram" id="captureArea">
+                <div class="nav-right">
+                    <svg class="svg-icon" viewBox="0 0 24 24">
+                        <path d="M15.5 8.4c-1-1.2-2.4-1.8-4-1.8-3.1 0-5.4 2.2-5.4 5.4 0 3.5 2.5 5.6 5.6 5.6 2.8 0 5.1-1.7 5.1-4.1 0-2-1.5-3.3-3.8-3.3-2.1 0-3.7 1.2-3.7 2.8 0 1.5 1.2 2.6 2.9 2.6 2.6 0 4.5-1.9 4.5-5.1 0-4.2-2.5-6.7-6.5-6.7"></path>
+                    </svg>
 
-<!-- 상태바는 완전히 제거 -->
+                    <svg class="svg-icon" viewBox="0 0 24 24">
+                        <path d="M4 7h16"></path>
+                        <path d="M4 12h16"></path>
+                        <path d="M4 17h16"></path>
+                    </svg>
+                </div>
 
-<!-- 상단 -->
-
-<div class="instagram-nav">
-
-    <div class="nav-left">
-
-        <svg class="svg-icon plus-icon" viewBox="0 0 24 24">
-            <path d="M12 5v14"></path>
-            <path d="M5 12h14"></path>
-        </svg>
-
-    </div>
-
-    <div class="nav-center">
-
-        <div class="nav-username" id="topUsername">
-            yourusername
-        </div>
-
-        <svg class="svg-icon arrow-icon" viewBox="0 0 24 24">
-            <path d="m7 9 5 5 5-5"></path>
-        </svg>
-
-    </div>
-
-    <div class="nav-right">
-
-        <!-- Threads 느낌 -->
-
-        <svg class="svg-icon" viewBox="0 0 24 24">
-            <path d="M15.5 8.4c-1-1.2-2.4-1.8-4-1.8-3.1 0-5.4 2.2-5.4 5.4 0 3.5 2.5 5.6 5.6 5.6 2.8 0 5.1-1.7 5.1-4.1 0-2-1.5-3.3-3.8-3.3-2.1 0-3.7 1.2-3.7 2.8 0 1.5 1.2 2.6 2.9 2.6 2.6 0 4.5-1.9 4.5-5.1 0-4.2-2.5-6.7-6.5-6.7"></path>
-        </svg>
-
-        <svg class="svg-icon" viewBox="0 0 24 24">
-            <path d="M4 7h16"></path>
-            <path d="M4 12h16"></path>
-            <path d="M4 17h16"></path>
-        </svg>
-
-    </div>
-
-</div>
-
-<!-- 프로필 -->
-
-<div class="profile-main">
-
-    <div class="profile-row">
-
-        <div
-            class="avatar-frame image-frame"
-            id="profileFrame"
-            data-label="프로필 사진"
-            data-type="profile"
-        >
-
-            <img
-                id="profileImage"
-                class="adjustable-image"
-                src="https://placehold.co/300x300/eef0f4/8c939c?text=%2B"
-                data-scale="1"
-                data-x="0"
-                data-y="0"
-            >
-
-        </div>
-
-        <div class="stats">
-
-            <div>
-                <div class="stat-number" id="postsCount">0</div>
-                <div class="stat-label">posts</div>
             </div>
 
-            <div>
-                <div class="stat-number" id="followersCount">0</div>
-                <div class="stat-label">followers</div>
-            </div>
+            <!-- 프로필 -->
+            <div class="profile-main">
 
-            <div>
-                <div class="stat-number" id="followingCount">0</div>
-                <div class="stat-label">following</div>
-            </div>
+                <div class="profile-row">
 
-        </div>
+                    <div class="avatar-wrap">
+                        <div
+                            class="avatar-frame image-frame"
+                            id="profileFrame"
+                            data-label="프로필 사진"
+                            data-type="profile"
+                        >
+                            <img
+                                id="profileImage"
+                                class="adjustable-image"
+                                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+                                data-scale="1"
+                                data-x="0"
+                                data-y="0"
+                            >
+                        </div>
+                    </div>
 
-    </div>
+                    <div class="stats">
+                        <div>
+                            <div class="stat-number" id="postsCount">0</div>
+                            <div class="stat-label">posts</div>
+                        </div>
 
-    <div class="bio">
+                        <div>
+                            <div class="stat-number" id="followersCount">0</div>
+                            <div class="stat-label">followers</div>
+                        </div>
 
-        <div class="profile-name" id="profileName">
-            Your Name
-        </div>
+                        <div>
+                            <div class="stat-number" id="followingCount">0</div>
+                            <div class="stat-label">following</div>
+                        </div>
+                    </div>
 
-        <div class="bio-text" id="profileBio">my little archive
+                </div>
+
+                <div class="bio">
+                    <div class="profile-name" id="profileName">Your Name</div>
+
+                    <div class="bio-text" id="profileBio">my little archive
 memories & daily life</div>
 
-        <div class="profile-link" id="profileLink">
-            example.com
-        </div>
+                    <div class="profile-link" id="profileLink">example.com</div>
+                </div>
 
-    </div>
-
-</div>
-
-<!-- 음악 배너 -->
-
-<div class="banner-row" id="musicBannerContainer">
-
-    <div class="add-banner">
-
-        <div class="small-plus"></div>
-
-        Add
-
-    </div>
-
-</div>
-
-<!-- 프로필 버튼 -->
-
-<div class="profile-buttons">
-
-    <div class="profile-button">
-        Edit profile
-    </div>
-
-    <div class="profile-button">
-        Share profile
-    </div>
-
-</div>
-
-<!-- 하이라이트 -->
-
-<div class="highlights-wrapper" id="highlightsWrapper">
-
-    <div class="highlights" id="highlightsContainer">
-
-        <div class="highlight add-highlight-item">
-
-            <div class="add-highlight-circle">
-                +
             </div>
 
-            <div class="highlight-name">
-                New
+            <!-- 음악 배너 -->
+            <div class="music-banner-row" id="musicBannerRow"></div>
+
+            <!-- 버튼 -->
+            <div class="profile-buttons">
+
+                <div class="profile-button" id="editProfileButtonText">
+                    Edit profile
+                </div>
+
+                <div class="profile-button" id="shareProfileButtonText">
+                    Share profile
+                </div>
+
             </div>
+
+            <!-- 하이라이트 -->
+            <div class="highlights-wrapper" id="highlightsWrapper">
+
+                <div class="highlights" id="highlightsContainer">
+
+                    <div class="highlight add-highlight-item">
+                        <div class="add-highlight-circle">+</div>
+                        <div class="highlight-name">New</div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- 탭 -->
+            <div class="tabs">
+
+                <div class="tab active">
+                    <svg class="grid-icon" viewBox="0 0 24 24" fill="#101418">
+                        <rect x="3" y="3" width="5" height="5" rx="1"></rect>
+                        <rect x="10" y="3" width="5" height="5" rx="1"></rect>
+                        <rect x="17" y="3" width="5" height="5" rx="1"></rect>
+
+                        <rect x="3" y="10" width="5" height="5" rx="1"></rect>
+                        <rect x="10" y="10" width="5" height="5" rx="1"></rect>
+                        <rect x="17" y="10" width="5" height="5" rx="1"></rect>
+
+                        <rect x="3" y="17" width="5" height="5" rx="1"></rect>
+                        <rect x="10" y="17" width="5" height="5" rx="1"></rect>
+                        <rect x="17" y="17" width="5" height="5" rx="1"></rect>
+                    </svg>
+                </div>
+
+                <div class="tab">
+                    <svg class="reels-icon" viewBox="0 0 24 24">
+                        <rect x="4" y="4" width="16" height="16" rx="4"></rect>
+                        <path d="M10 8.7 L16 12 L10 15.3 Z"></path>
+                    </svg>
+                </div>
+
+                <div class="tab">
+                    <svg class="tag-icon" viewBox="0 0 24 24">
+                        <rect x="4" y="3" width="16" height="18" rx="4"></rect>
+                        <circle cx="12" cy="10" r="3"></circle>
+                        <path d="M7.5 18c1.1-2 2.6-3 4.5-3s3.4 1 4.5 3"></path>
+                    </svg>
+                </div>
+
+            </div>
+
+            <div class="posts" id="postsContainer"></div>
 
         </div>
 
-    </div>
-
-</div>
-
-<!-- 탭 -->
-
-<div class="tabs">
-
-    <!-- 게시물 -->
-
-    <div class="tab active">
-
-        <svg class="grid-icon" viewBox="0 0 24 24" fill="#101418">
-
-            <rect x="3" y="3" width="5" height="5" rx="1"></rect>
-            <rect x="10" y="3" width="5" height="5" rx="1"></rect>
-            <rect x="17" y="3" width="5" height="5" rx="1"></rect>
-
-            <rect x="3" y="10" width="5" height="5" rx="1"></rect>
-            <rect x="10" y="10" width="5" height="5" rx="1"></rect>
-            <rect x="17" y="10" width="5" height="5" rx="1"></rect>
-
-            <rect x="3" y="17" width="5" height="5" rx="1"></rect>
-            <rect x="10" y="17" width="5" height="5" rx="1"></rect>
-            <rect x="17" y="17" width="5" height="5" rx="1"></rect>
-
-        </svg>
-
-    </div>
-
-    <!-- 릴스 : 빗금 없는 둥근 사각형 + 가운데 삼각형 -->
-
-    <div class="tab">
-
-        <svg class="reels-icon" viewBox="0 0 24 24">
-
-            <rect
-                x="4"
-                y="4"
-                width="16"
-                height="16"
-                rx="4"
-            ></rect>
-
-            <path
-                d="M10 8.7 L16 12 L10 15.3 Z"
-            ></path>
-
-        </svg>
-
-    </div>
-
-    <!-- 태그 -->
-
-    <div class="tab">
-
-        <svg class="tag-icon" viewBox="0 0 24 24">
-
-            <rect
-                x="4"
-                y="3"
-                width="16"
-                height="18"
-                rx="4"
-            ></rect>
-
-            <circle cx="12" cy="10" r="3"></circle>
-
-            <path
-                d="M7.5 18c1.1-2 2.6-3 4.5-3s3.4 1 4.5 3"
-            ></path>
-
-        </svg>
-
-    </div>
-
-</div>
-
-<div class="posts" id="postsContainer"></div>
-
-</div>
-
-</main>
+    </main>
 
 </div>
 
 <script>
-
-/* =====================================================
-   텍스트
-===================================================== */
+/* =========================
+   텍스트 요소
+========================= */
 
 const usernameInput = document.getElementById("usernameInput");
 const nameInput = document.getElementById("nameInput");
@@ -1216,6 +1083,9 @@ const postsCountInput = document.getElementById("postsCountInput");
 const followersInput = document.getElementById("followersInput");
 const followingInput = document.getElementById("followingInput");
 
+const editButtonInput = document.getElementById("editButtonInput");
+const shareButtonInput = document.getElementById("shareButtonInput");
+
 const topUsername = document.getElementById("topUsername");
 const profileName = document.getElementById("profileName");
 const profileBio = document.getElementById("profileBio");
@@ -1225,9 +1095,11 @@ const postsCount = document.getElementById("postsCount");
 const followersCount = document.getElementById("followersCount");
 const followingCount = document.getElementById("followingCount");
 
+const editProfileButtonText = document.getElementById("editProfileButtonText");
+const shareProfileButtonText = document.getElementById("shareProfileButtonText");
+
 usernameInput.addEventListener("input", () => {
-    topUsername.textContent =
-        usernameInput.value || "username";
+    topUsername.textContent = usernameInput.value || "username";
 });
 
 nameInput.addEventListener("input", () => {
@@ -1239,12 +1111,8 @@ bioInput.addEventListener("input", () => {
 });
 
 linkInput.addEventListener("input", () => {
-
     profileLink.textContent = linkInput.value;
-
-    profileLink.style.display =
-        linkInput.value ? "block" : "none";
-
+    profileLink.style.display = linkInput.value ? "block" : "none";
 });
 
 postsCountInput.addEventListener("input", () => {
@@ -1259,158 +1127,111 @@ followingInput.addEventListener("input", () => {
     followingCount.textContent = followingInput.value;
 });
 
-/* =====================================================
-   사진 선택 / 확대 / 이동
-===================================================== */
+editButtonInput.addEventListener("input", () => {
+    editProfileButtonText.textContent =
+        editButtonInput.value.trim() || "Edit profile";
+});
+
+shareButtonInput.addEventListener("input", () => {
+    shareProfileButtonText.textContent =
+        shareButtonInput.value.trim() || "Share profile";
+});
+
+/* =========================
+   사진 선택/조정
+========================= */
 
 let selectedFrame = null;
 
-const selectedPhotoName =
-    document.getElementById("selectedPhotoName");
+const selectedPhotoName = document.getElementById("selectedPhotoName");
+const zoomSlider = document.getElementById("zoomSlider");
+const xSlider = document.getElementById("xSlider");
+const ySlider = document.getElementById("ySlider");
+const zoomValue = document.getElementById("zoomValue");
+const xValue = document.getElementById("xValue");
+const yValue = document.getElementById("yValue");
+const resetPhotoButton = document.getElementById("resetPhotoButton");
+const deletePhotoButton = document.getElementById("deletePhotoButton");
 
-const zoomSlider =
-    document.getElementById("zoomSlider");
+function applyImageStyles(img) {
+    const scale = Number(img.dataset.scale || 1);
+    const x = Number(img.dataset.x || 0);
+    const y = Number(img.dataset.y || 0);
 
-const xSlider =
-    document.getElementById("xSlider");
-
-const ySlider =
-    document.getElementById("ySlider");
-
-const zoomValue =
-    document.getElementById("zoomValue");
-
-const xValue =
-    document.getElementById("xValue");
-
-const yValue =
-    document.getElementById("yValue");
-
-const resetPhotoButton =
-    document.getElementById("resetPhotoButton");
-
-const deletePhotoButton =
-    document.getElementById("deletePhotoButton");
-
+    img.style.transform = `scale(${scale})`;
+    img.style.objectPosition = `${50 + x}% ${50 + y}%`;
+}
 
 function registerImageFrame(frame) {
-
     frame.addEventListener("click", () => {
-
-        document
-        .querySelectorAll(".image-frame")
-        .forEach(item => {
+        document.querySelectorAll(".image-frame").forEach(item => {
             item.classList.remove("selected-image");
         });
 
         frame.classList.add("selected-image");
-
         selectedFrame = frame;
 
-        const img =
-            frame.querySelector(".adjustable-image");
-
+        const img = frame.querySelector(".adjustable-image");
         if (!img) return;
 
-        const scale =
-            parseFloat(img.dataset.scale || 1);
-
-        const x =
-            parseFloat(img.dataset.x || 0);
-
-        const y =
-            parseFloat(img.dataset.y || 0);
+        const scale = parseFloat(img.dataset.scale || 1);
+        const x = parseFloat(img.dataset.x || 0);
+        const y = parseFloat(img.dataset.y || 0);
 
         zoomSlider.disabled = false;
         xSlider.disabled = false;
         ySlider.disabled = false;
         resetPhotoButton.disabled = false;
+        deletePhotoButton.disabled = frame.dataset.type === "profile";
 
-        deletePhotoButton.disabled =
-            frame.dataset.type === "profile";
-
-        zoomSlider.value =
-            Math.round(scale * 100);
-
+        zoomSlider.value = Math.round(scale * 100);
         xSlider.value = x;
         ySlider.value = y;
 
-        zoomValue.textContent =
-            Math.round(scale * 100) + "%";
-
+        zoomValue.textContent = Math.round(scale * 100) + "%";
         xValue.textContent = x;
         yValue.textContent = y;
 
-        selectedPhotoName.textContent =
-            frame.dataset.label || "선택한 사진";
-
+        selectedPhotoName.textContent = frame.dataset.label || "선택한 사진";
     });
-
 }
 
-
 function updateImageTransform() {
-
     if (!selectedFrame) return;
 
-    const img =
-        selectedFrame.querySelector(".adjustable-image");
-
+    const img = selectedFrame.querySelector(".adjustable-image");
     if (!img) return;
 
-    const scale =
-        Number(zoomSlider.value) / 100;
-
-    const x =
-        Number(xSlider.value);
-
-    const y =
-        Number(ySlider.value);
+    const scale = Number(zoomSlider.value) / 100;
+    const x = Number(xSlider.value);
+    const y = Number(ySlider.value);
 
     img.dataset.scale = scale;
     img.dataset.x = x;
     img.dataset.y = y;
 
-    img.style.transform =
-        `translate(${x}%, ${y}%) scale(${scale})`;
+    applyImageStyles(img);
 
-    zoomValue.textContent =
-        Math.round(scale * 100) + "%";
-
+    zoomValue.textContent = Math.round(scale * 100) + "%";
     xValue.textContent = x;
     yValue.textContent = y;
-
 }
 
-zoomSlider.addEventListener(
-    "input",
-    updateImageTransform
-);
-
-xSlider.addEventListener(
-    "input",
-    updateImageTransform
-);
-
-ySlider.addEventListener(
-    "input",
-    updateImageTransform
-);
-
+zoomSlider.addEventListener("input", updateImageTransform);
+xSlider.addEventListener("input", updateImageTransform);
+ySlider.addEventListener("input", updateImageTransform);
 
 resetPhotoButton.addEventListener("click", () => {
-
     if (!selectedFrame) return;
 
-    const img =
-        selectedFrame.querySelector(".adjustable-image");
+    const img = selectedFrame.querySelector(".adjustable-image");
+    if (!img) return;
 
     img.dataset.scale = 1;
     img.dataset.x = 0;
     img.dataset.y = 0;
 
-    img.style.transform =
-        "translate(0%, 0%) scale(1)";
+    applyImageStyles(img);
 
     zoomSlider.value = 100;
     xSlider.value = 0;
@@ -1419,194 +1240,119 @@ resetPhotoButton.addEventListener("click", () => {
     zoomValue.textContent = "100%";
     xValue.textContent = "0";
     yValue.textContent = "0";
-
 });
 
-
 function clearPhotoSelection() {
-
     if (selectedFrame) {
         selectedFrame.classList.remove("selected-image");
     }
 
     selectedFrame = null;
-
-    selectedPhotoName.textContent =
-        "선택된 사진 없음";
+    selectedPhotoName.textContent = "선택된 사진 없음";
 
     zoomSlider.disabled = true;
     xSlider.disabled = true;
     ySlider.disabled = true;
-
     resetPhotoButton.disabled = true;
     deletePhotoButton.disabled = true;
-
 }
 
-
-/* =====================================================
+/* =========================
    프로필 사진
-===================================================== */
+========================= */
 
-const profileUpload =
-    document.getElementById("profileUpload");
-
-const profileImage =
-    document.getElementById("profileImage");
-
-const profileFrame =
-    document.getElementById("profileFrame");
+const profileUpload = document.getElementById("profileUpload");
+const profileImage = document.getElementById("profileImage");
+const profileFrame = document.getElementById("profileFrame");
 
 registerImageFrame(profileFrame);
+applyImageStyles(profileImage);
 
 profileUpload.addEventListener("change", () => {
-
-    const file =
-        profileUpload.files[0];
-
+    const file = profileUpload.files[0];
     if (!file) return;
 
-    const reader =
-        new FileReader();
+    const reader = new FileReader();
 
     reader.onload = e => {
-
-        profileImage.src =
-            e.target.result;
-
+        profileImage.src = e.target.result;
         profileImage.dataset.scale = 1;
         profileImage.dataset.x = 0;
         profileImage.dataset.y = 0;
-
-        profileImage.style.transform =
-            "translate(0%, 0%) scale(1)";
-
+        applyImageStyles(profileImage);
     };
 
     reader.readAsDataURL(file);
-
 });
 
-
-/* =====================================================
+/* =========================
    음악 배너
-===================================================== */
+========================= */
 
-const songTitleInput =
-    document.getElementById("songTitleInput");
-
-const songArtistInput =
-    document.getElementById("songArtistInput");
-
-const addMusicButton =
-    document.getElementById("addMusicButton");
-
-const musicBannerContainer =
-    document.getElementById("musicBannerContainer");
-
-const musicEditorList =
-    document.getElementById("musicEditorList");
+const songTitleInput = document.getElementById("songTitleInput");
+const songArtistInput = document.getElementById("songArtistInput");
+const addMusicButton = document.getElementById("addMusicButton");
+const musicBannerRow = document.getElementById("musicBannerRow");
+const musicEditorList = document.getElementById("musicEditorList");
 
 let musicCounter = 0;
 
+function updateMusicBannerVisibility() {
+    const count = musicBannerRow.querySelectorAll(".music-banner").length;
+    musicBannerRow.style.display = count > 0 ? "flex" : "none";
+}
 
 function createMusicBanner(title, artist) {
-
     musicCounter++;
+    const id = "music-" + musicCounter;
 
-    const id =
-        "music-" + musicCounter;
-
-    const banner =
-        document.createElement("div");
-
-    banner.className =
-        "music-banner";
-
+    const banner = document.createElement("div");
+    banner.className = "music-banner";
     banner.dataset.musicId = id;
-
     banner.innerHTML = `
         <svg class="music-play" viewBox="0 0 24 24">
             <polygon points="8,5 19,12 8,19"></polygon>
         </svg>
-
         <div class="music-text">
             <span class="music-title"></span>
             <span class="music-artist"></span>
         </div>
     `;
 
-    banner.querySelector(".music-title")
-        .textContent = title;
+    banner.querySelector(".music-title").textContent = title;
+    banner.querySelector(".music-artist").textContent = artist;
 
-    banner.querySelector(".music-artist")
-        .textContent = artist;
+    musicBannerRow.appendChild(banner);
 
-
-    const addButton =
-        musicBannerContainer
-        .querySelector(".add-banner");
-
-    musicBannerContainer.insertBefore(
-        banner,
-        addButton
-    );
-
-
-    const editorItem =
-        document.createElement("div");
-
-    editorItem.className =
-        "banner-editor-row";
-
+    const editorItem = document.createElement("div");
+    editorItem.className = "banner-editor-row";
     editorItem.dataset.musicId = id;
 
-    const text =
-        document.createElement("div");
+    const text = document.createElement("div");
+    text.className = "banner-editor-text";
+    text.textContent = title + "  " + artist;
 
-    text.className =
-        "banner-editor-text";
+    const deleteButton = document.createElement("button");
+    deleteButton.className = "banner-delete";
+    deleteButton.textContent = "삭제";
+    deleteButton.type = "button";
 
-    text.textContent =
-        title + "  " + artist;
-
-
-    const deleteButton =
-        document.createElement("button");
-
-    deleteButton.className =
-        "banner-delete";
-
-    deleteButton.textContent =
-        "삭제";
-
-
-    deleteButton.addEventListener(
-        "click",
-        () => {
-
-            banner.remove();
-            editorItem.remove();
-
-        }
-    );
-
+    deleteButton.addEventListener("click", () => {
+        banner.remove();
+        editorItem.remove();
+        updateMusicBannerVisibility();
+    });
 
     editorItem.appendChild(text);
     editorItem.appendChild(deleteButton);
-
     musicEditorList.appendChild(editorItem);
 
+    updateMusicBannerVisibility();
 }
 
-
 addMusicButton.addEventListener("click", () => {
-
-    const title =
-        songTitleInput.value.trim();
-
-    const artist =
-        songArtistInput.value.trim();
+    const title = songTitleInput.value.trim();
+    const artist = songArtistInput.value.trim();
 
     if (!title && !artist) return;
 
@@ -1617,306 +1363,179 @@ addMusicButton.addEventListener("click", () => {
 
     songTitleInput.value = "";
     songArtistInput.value = "";
-
 });
 
+/* =========================
+   하이라이트 표시/숨김
+========================= */
 
-/* =====================================================
-   하이라이트 표시
-===================================================== */
-
-const highlightToggle =
-    document.getElementById("highlightToggle");
-
-const highlightsWrapper =
-    document.getElementById("highlightsWrapper");
-
-const highlightEditor =
-    document.getElementById("highlightEditor");
+const highlightToggle = document.getElementById("highlightToggle");
+const highlightsWrapper = document.getElementById("highlightsWrapper");
+const highlightEditor = document.getElementById("highlightEditor");
 
 highlightToggle.addEventListener("change", () => {
-
-    const visible =
-        highlightToggle.checked;
-
-    highlightsWrapper.style.display =
-        visible ? "block" : "none";
-
-    highlightEditor.style.display =
-        visible ? "block" : "none";
-
+    const visible = highlightToggle.checked;
+    highlightsWrapper.style.display = visible ? "block" : "none";
+    highlightEditor.style.display = visible ? "block" : "none";
 });
 
-
-/* =====================================================
+/* =========================
    하이라이트 추가
-===================================================== */
+========================= */
 
-const highlightUpload =
-    document.getElementById("highlightUpload");
-
-const highlightNameInput =
-    document.getElementById("highlightNameInput");
-
-const highlightsContainer =
-    document.getElementById("highlightsContainer");
-
+const highlightUpload = document.getElementById("highlightUpload");
+const highlightNameInput = document.getElementById("highlightNameInput");
+const highlightsContainer = document.getElementById("highlightsContainer");
 
 highlightUpload.addEventListener("change", () => {
-
-    const file =
-        highlightUpload.files[0];
-
+    const file = highlightUpload.files[0];
     if (!file) return;
 
-    const reader =
-        new FileReader();
+    const reader = new FileReader();
 
     reader.onload = e => {
+        const item = document.createElement("div");
+        item.className = "highlight";
 
-        const item =
-            document.createElement("div");
+        const frame = document.createElement("div");
+        frame.className = "highlight-frame";
 
-        item.className =
-            "highlight";
+        const inner = document.createElement("div");
+        inner.className = "highlight-inner image-frame";
+        inner.dataset.label = "하이라이트 사진";
+        inner.dataset.type = "highlight";
 
-        const frame =
-            document.createElement("div");
-
-        frame.className =
-            "highlight-frame";
-
-        const inner =
-            document.createElement("div");
-
-        inner.className =
-            "highlight-inner image-frame";
-
-        inner.dataset.label =
-            "하이라이트 사진";
-
-        inner.dataset.type =
-            "highlight";
-
-        const img =
-            document.createElement("img");
-
-        img.className =
-            "adjustable-image";
-
-        img.src =
-            e.target.result;
-
+        const img = document.createElement("img");
+        img.className = "adjustable-image";
+        img.src = e.target.result;
         img.dataset.scale = 1;
         img.dataset.x = 0;
         img.dataset.y = 0;
+        applyImageStyles(img);
 
-        const name =
-            document.createElement("div");
-
-        name.className =
-            "highlight-name";
-
-        name.textContent =
-            highlightNameInput.value.trim()
-            || "highlight";
+        const name = document.createElement("div");
+        name.className = "highlight-name";
+        name.textContent = highlightNameInput.value.trim() || "highlight";
 
         inner.appendChild(img);
         frame.appendChild(inner);
-
         item.appendChild(frame);
         item.appendChild(name);
 
-        const addItem =
-            highlightsContainer
-            .querySelector(".add-highlight-item");
-
-        highlightsContainer.insertBefore(
-            item,
-            addItem
-        );
+        const addItem = highlightsContainer.querySelector(".add-highlight-item");
+        highlightsContainer.insertBefore(item, addItem);
 
         registerImageFrame(inner);
 
         highlightNameInput.value = "";
-
+        highlightUpload.value = "";
     };
 
     reader.readAsDataURL(file);
-
 });
 
-
-/* =====================================================
+/* =========================
    게시물
-===================================================== */
+========================= */
 
-const postsUpload =
-    document.getElementById("postsUpload");
-
-const postsContainer =
-    document.getElementById("postsContainer");
-
+const postsUpload = document.getElementById("postsUpload");
+const postsContainer = document.getElementById("postsContainer");
 let postCounter = 0;
 
+function updatePostCount() {
+    const count = postsContainer.querySelectorAll(".post").length;
+    postsCountInput.value = count;
+    postsCount.textContent = count;
+}
+
 postsUpload.addEventListener("change", () => {
-
-    const files =
-        Array.from(postsUpload.files);
-
+    const files = Array.from(postsUpload.files);
     if (!files.length) return;
 
     files.forEach(file => {
-
-        const reader =
-            new FileReader();
+        const reader = new FileReader();
 
         reader.onload = e => {
-
             postCounter++;
 
-            const post =
-                document.createElement("div");
+            const post = document.createElement("div");
+            post.className = "post image-frame";
+            post.dataset.label = `게시물 사진 ${postCounter}`;
+            post.dataset.type = "post";
 
-            post.className =
-                "post image-frame";
-
-            post.dataset.label =
-                `게시물 사진 ${postCounter}`;
-
-            post.dataset.type =
-                "post";
-
-            const img =
-                document.createElement("img");
-
-            img.className =
-                "adjustable-image";
-
-            img.src =
-                e.target.result;
-
+            const img = document.createElement("img");
+            img.className = "adjustable-image";
+            img.src = e.target.result;
             img.dataset.scale = 1;
             img.dataset.x = 0;
             img.dataset.y = 0;
+            applyImageStyles(img);
 
             post.appendChild(img);
-
             postsContainer.appendChild(post);
 
             registerImageFrame(post);
-
             updatePostCount();
-
         };
 
         reader.readAsDataURL(file);
-
     });
 
     postsUpload.value = "";
-
 });
 
-
-function updatePostCount() {
-
-    const count =
-        postsContainer
-        .querySelectorAll(".post")
-        .length;
-
-    postsCountInput.value = count;
-    postsCount.textContent = count;
-
-}
-
-
-/* =====================================================
+/* =========================
    선택 사진 삭제
-===================================================== */
+========================= */
 
 deletePhotoButton.addEventListener("click", () => {
-
     if (!selectedFrame) return;
 
-    const type =
-        selectedFrame.dataset.type;
+    const type = selectedFrame.dataset.type;
 
     if (type === "post") {
-
         selectedFrame.remove();
-
         clearPhotoSelection();
         updatePostCount();
-
         return;
-
     }
 
     if (type === "highlight") {
-
-        const highlightItem =
-            selectedFrame.closest(".highlight");
-
+        const highlightItem = selectedFrame.closest(".highlight");
         if (highlightItem) {
             highlightItem.remove();
         }
-
         clearPhotoSelection();
-
     }
-
 });
 
-
-/* =====================================================
+/* =========================
    PNG 저장
-===================================================== */
+========================= */
 
-document
-.getElementById("saveButton")
-.addEventListener("click", async () => {
-
-    /* 선택 테두리는 저장하지 않기 */
-
-    const selected =
-        document.querySelector(".selected-image");
-
+document.getElementById("saveButton").addEventListener("click", async () => {
+    const selected = document.querySelector(".selected-image");
     if (selected) {
         selected.classList.remove("selected-image");
     }
 
-    const target =
-        document.getElementById("captureArea");
+    const target = document.getElementById("captureArea");
 
-    const canvas =
-        await html2canvas(
-            target,
-            {
-                scale: 3,
-                backgroundColor: "#ffffff",
-                useCORS: true
-            }
-        );
+    const canvas = await html2canvas(target, {
+        scale: 3,
+        backgroundColor: "#ffffff",
+        useCORS: true
+    });
 
     if (selected) {
         selected.classList.add("selected-image");
     }
 
-    const link =
-        document.createElement("a");
-
-    link.download =
-        `${usernameInput.value || "instagram-profile"}.png`;
-
-    link.href =
-        canvas.toDataURL("image/png");
-
+    const link = document.createElement("a");
+    link.download = `${usernameInput.value || "instagram-profile"}.png`;
+    link.href = canvas.toDataURL("image/png");
     link.click();
-
 });
-
 </script>
 
 </body>
