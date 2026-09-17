@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Instagram Profile Generator</title>
 
 <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js"></script>
@@ -26,9 +25,9 @@ body {
     min-height: 100vh;
 }
 
-/* =========================
-   왼쪽 편집창
-========================= */
+/* =====================================================
+   편집창
+===================================================== */
 
 .editor {
     width: 315px;
@@ -37,10 +36,8 @@ body {
     top: 0;
     overflow-y: auto;
     flex-shrink: 0;
-
     background: #fff;
     border-right: 1px solid #ddd;
-
     padding: 20px 16px 32px;
 }
 
@@ -52,28 +49,23 @@ body {
 .editor-section {
     margin-bottom: 16px;
     padding: 13px 12px 12px;
-
     border: 1px solid #ececec;
     border-radius: 12px;
-
     background: #fff;
 }
 
 .section-title {
     margin-bottom: 12px;
-
     font-size: 12px;
     font-weight: 700;
     letter-spacing: .4px;
     color: #444;
-
     text-transform: uppercase;
 }
 
 label {
     display: block;
     margin-bottom: 5px;
-
     font-size: 12px;
     font-weight: 600;
     color: #555;
@@ -82,15 +74,11 @@ label {
 input,
 textarea {
     width: 100%;
-
     margin-bottom: 10px;
     padding: 9px 10px;
-
     border: 1px solid #ddd;
     border-radius: 8px;
-
     background: #fff;
-
     font-size: 13px;
     outline: none;
 }
@@ -113,7 +101,6 @@ textarea:focus {
 
 .helper {
     margin-top: 5px;
-
     font-size: 11px;
     line-height: 1.5;
     color: #888;
@@ -121,20 +108,15 @@ textarea:focus {
 
 .upload {
     display: block;
-
     margin-bottom: 7px;
     padding: 11px;
-
     border: 1px dashed #ccc;
     border-radius: 9px;
-
     background: #fafafa;
-
     text-align: center;
     font-size: 12px;
     font-weight: 600;
     color: #555;
-
     cursor: pointer;
 }
 
@@ -148,18 +130,13 @@ textarea:focus {
 
 .editor-button {
     width: 100%;
-
     padding: 10px;
-
     border: none;
     border-radius: 8px;
-
     background: #efefef;
-
     font-size: 12px;
     font-weight: 700;
     color: #111;
-
     cursor: pointer;
 }
 
@@ -179,27 +156,23 @@ textarea:focus {
     color: #ed4956;
 }
 
-/* =========================
+/* =====================================================
    토글
-========================= */
+===================================================== */
 
 .toggle-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     margin-bottom: 10px;
     padding: 10px;
-
     border: 1px solid #e3e3e3;
     border-radius: 9px;
-
     font-size: 13px;
 }
 
 .switch {
     position: relative;
-
     width: 40px;
     height: 23px;
 }
@@ -211,32 +184,22 @@ textarea:focus {
 .slider {
     position: absolute;
     inset: 0;
-
     border-radius: 30px;
-
     background: #d4d4d4;
-
     cursor: pointer;
-
     transition: .2s;
 }
 
 .slider::before {
     content: "";
-
     position: absolute;
     left: 2px;
     top: 2px;
-
     width: 19px;
     height: 19px;
-
     border-radius: 50%;
-
-    background: white;
-
+    background: #fff;
     box-shadow: 0 1px 3px rgba(0,0,0,.2);
-
     transition: .2s;
 }
 
@@ -248,26 +211,22 @@ textarea:focus {
     transform: translateX(17px);
 }
 
-/* =========================
+/* =====================================================
    관리 리스트
-========================= */
+===================================================== */
 
 .banner-editor-row {
     display: grid;
     grid-template-columns: 1fr auto;
     align-items: center;
     gap: 8px;
-
     padding: 9px 0;
-
     border-bottom: 1px solid #eee;
 }
 
 .banner-editor-text {
     overflow: hidden;
-
     font-size: 12px;
-
     white-space: nowrap;
     text-overflow: ellipsis;
 }
@@ -275,22 +234,17 @@ textarea:focus {
 .small-delete {
     border: none;
     background: none;
-
     color: #ed4956;
-
     font-size: 11px;
     font-weight: 700;
-
     cursor: pointer;
 }
 
 .highlight-editor-item {
     margin-top: 10px;
     padding: 10px;
-
     border: 1px solid #e5e5e5;
     border-radius: 9px;
-
     background: #fafafa;
 }
 
@@ -298,7 +252,6 @@ textarea:focus {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     margin-bottom: 7px;
 }
 
@@ -312,29 +265,25 @@ textarea:focus {
     margin-bottom: 0;
 }
 
-/* =========================
+/* =====================================================
    사진 조정
-========================= */
+===================================================== */
 
 .photo-editor-box {
     padding: 12px;
-
     border: 1px solid #e5e5e5;
     border-radius: 10px;
-
     background: #fafafa;
 }
 
 .selected-photo-name {
     margin-bottom: 10px;
-
     font-size: 12px;
     font-weight: 700;
 }
 
 .photo-help {
     margin-bottom: 12px;
-
     font-size: 11px;
     line-height: 1.45;
     color: #888;
@@ -347,9 +296,7 @@ textarea:focus {
 .range-head {
     display: flex;
     justify-content: space-between;
-
     margin-bottom: 4px;
-
     font-size: 11px;
 }
 
@@ -360,45 +307,37 @@ textarea:focus {
 input[type="range"] {
     margin: 0;
     padding: 0;
-
     border: none;
 }
 
-/* =========================
-   오른쪽
-========================= */
+/* =====================================================
+   미리보기
+===================================================== */
 
 .preview-area {
     flex: 1;
-
     display: flex;
     justify-content: center;
     align-items: flex-start;
-
     padding: 28px;
 }
 
 .instagram {
     width: 500px;
-
     overflow: hidden;
-
     background: #fff;
-
     box-shadow: 0 3px 20px rgba(0,0,0,.08);
 }
 
-/* =========================
+/* =====================================================
    상단
-========================= */
+===================================================== */
 
 .instagram-nav {
     height: 67px;
-
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
-
     padding: 2px 24px 0;
 }
 
@@ -411,20 +350,15 @@ input[type="range"] {
     display: flex;
     align-items: center;
     justify-content: center;
-
     gap: 6px;
-
     min-width: 0;
 }
 
 .nav-username {
     max-width: 180px;
-
     overflow: hidden;
-
     font-size: 17px;
     font-weight: 700;
-
     white-space: nowrap;
     text-overflow: ellipsis;
 }
@@ -438,11 +372,9 @@ input[type="range"] {
 .svg-icon {
     width: 29px;
     height: 29px;
-
     fill: none;
     stroke: #101418;
     stroke-width: 2.2;
-
     stroke-linecap: round;
     stroke-linejoin: round;
 }
@@ -458,34 +390,26 @@ input[type="range"] {
     stroke-width: 2.6;
 }
 
-/* =========================
-   이미지
-========================= */
+/* =====================================================
+   사진 공통
+===================================================== */
 
 .image-frame {
     position: relative;
-
     overflow: hidden;
-
     cursor: pointer;
 }
 
 .adjustable-image {
     position: absolute;
-
     left: 50%;
     top: 50%;
-
     width: 100%;
     height: 100%;
-
     object-fit: cover;
-
     transform: translate(-50%, -50%) scale(1);
     transform-origin: center center;
-
     display: block;
-
     pointer-events: none;
     user-select: none;
 }
@@ -493,18 +417,15 @@ input[type="range"] {
 .export-freeze-canvas {
     position: absolute;
     inset: 0;
-
     width: 100%;
     height: 100%;
-
     display: block;
-
     pointer-events: none;
 }
 
-/* =========================
+/* =====================================================
    프로필
-========================= */
+===================================================== */
 
 .profile-main {
     padding: 3px 22px 0;
@@ -525,36 +446,29 @@ input[type="range"] {
 .avatar-story-shell {
     width: 118px;
     height: 118px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     border-radius: 50%;
 }
 
 .avatar-story-shell.story-active {
     padding: 3px;
-
-    background:
-        linear-gradient(
-            45deg,
-            #feda75 0%,
-            #fa7e1e 22%,
-            #d62976 50%,
-            #962fbf 74%,
-            #4f5bd5 100%
-        );
+    background: linear-gradient(
+        45deg,
+        #feda75 0%,
+        #fa7e1e 22%,
+        #d62976 50%,
+        #962fbf 74%,
+        #4f5bd5 100%
+    );
 }
 
 .avatar-story-gap {
     width: 100%;
     height: 100%;
-
     padding: 3px;
-
     border-radius: 50%;
-
     background: #fff;
 }
 
@@ -565,9 +479,7 @@ input[type="range"] {
 .avatar-frame {
     width: 100%;
     height: 100%;
-
     border-radius: 50%;
-
     background: #eceff3;
 }
 
@@ -579,15 +491,12 @@ input[type="range"] {
 .stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-
     gap: 4px;
-
     text-align: center;
 }
 
 .stat-number {
     margin-bottom: 1px;
-
     font-size: 18px;
     font-weight: 700;
 }
@@ -598,14 +507,12 @@ input[type="range"] {
 
 .bio {
     padding-top: 14px;
-
     font-size: 14px;
     line-height: 1.35;
 }
 
 .profile-name {
     margin-bottom: 3px;
-
     font-weight: 650;
 }
 
@@ -615,24 +522,21 @@ input[type="range"] {
 
 .profile-link {
     margin-top: 3px;
-
     color: #00376b;
     font-weight: 600;
 }
 
-/* =========================
-   음악
-========================= */
+/* =====================================================
+   음악 배너
+   ★ 이번 수정 핵심 ★
+===================================================== */
 
 .music-banner-row {
     display: none;
-
-    gap: 9px;
-
+    align-items: center;
+    gap: 8px;
     padding: 17px 22px 15px;
-
     overflow-x: auto;
-
     scrollbar-width: none;
 }
 
@@ -641,93 +545,129 @@ input[type="range"] {
 }
 
 .music-banner {
-    height: 38px;
+    height: 40px;
 
     display: inline-flex;
     align-items: center;
+    justify-content: flex-start;
 
     flex-shrink: 0;
 
     gap: 8px;
 
-    max-width: 330px;
+    max-width: 340px;
 
     padding: 0 15px 0 12px;
 
-    border: 1px solid #d6d9dc;
+    border: 1px solid #d7d7d7;
     border-radius: 22px;
 
     background: #fff;
+
+    line-height: 1;
 }
 
-.music-play {
-    width: 19px;
-    height: 19px;
-
-    flex-shrink: 0;
-}
-
-.music-play polygon {
-    fill: none;
-    stroke: #111;
-    stroke-width: 2.2;
-
-    stroke-linejoin: round;
-}
-
-.music-text {
-    overflow: hidden;
-
-    font-size: 14px;
-
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
-.music-title {
-    font-weight: 700;
-}
-
-.music-artist {
-    margin-left: 5px;
-}
-
-/* =========================
-   버튼
-========================= */
-
-.profile-buttons {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-
-    gap: 7px;
-
-    padding: 0 22px;
-}
-
-.profile-button {
-    height: 42px;
+/* 재생 아이콘 영역 자체를 20x20으로 고정 */
+.music-play-wrap {
+    width: 20px;
+    height: 20px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
+    flex: 0 0 20px;
+}
+
+/* 실제 SVG */
+.music-play {
+    width: 18px;
+    height: 18px;
+
+    display: block;
+
+    overflow: visible;
+}
+
+.music-play path {
+    fill: none;
+    stroke: #111;
+    stroke-width: 2.1;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* 제목/가수 전체 */
+.music-text {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+
     overflow: hidden;
 
+    font-size: 14px;
+    line-height: 20px;
+
+    white-space: nowrap;
+}
+
+/* 제목 */
+.music-title {
+    flex-shrink: 0;
+
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+
+    color: #111;
+}
+
+/* 가수 */
+.music-artist {
+    min-width: 0;
+
+    overflow: hidden;
+
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+
+    color: #111;
+
+    text-overflow: ellipsis;
+}
+
+/* =====================================================
+   프로필 버튼
+===================================================== */
+
+.profile-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
+    padding: 0 22px;
+}
+
+.profile-button {
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
     border-radius: 7px;
-
     background: #f0f1f4;
-
     font-size: 16px;
     font-weight: 650;
-
     white-space: nowrap;
     text-overflow: ellipsis;
 }
 
-/* =========================
+/* =====================================================
    하이라이트
-========================= */
+===================================================== */
 
 .highlights-wrapper {
     padding-top: 20px;
@@ -735,15 +675,10 @@ input[type="range"] {
 
 .highlights {
     min-height: 84px;
-
     display: flex;
-
     gap: 14px;
-
     padding: 0 22px 17px;
-
     overflow-x: auto;
-
     scrollbar-width: none;
 }
 
@@ -753,33 +688,25 @@ input[type="range"] {
 
 .highlight {
     width: 72px;
-
     flex-shrink: 0;
-
     text-align: center;
-
     font-size: 11px;
 }
 
 .highlight-frame {
     width: 66px;
     height: 66px;
-
     margin: 0 auto;
     padding: 3px;
-
     border: 1px solid #d8d8d8;
     border-radius: 50%;
-
-    background: white;
+    background: #fff;
 }
 
 .highlight-inner {
     width: 100%;
     height: 100%;
-
     overflow: hidden;
-
     border-radius: 50%;
 }
 
@@ -790,9 +717,7 @@ input[type="range"] {
 
 .highlight-name {
     margin-top: 5px;
-
     overflow: hidden;
-
     white-space: nowrap;
     text-overflow: ellipsis;
 }
@@ -800,38 +725,30 @@ input[type="range"] {
 .add-highlight-circle {
     width: 66px;
     height: 66px;
-
     margin: 0 auto;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     border: 1px solid #d6d6d6;
     border-radius: 50%;
-
     font-size: 30px;
     font-weight: 300;
 }
 
-/* =========================
+/* =====================================================
    탭
-========================= */
+===================================================== */
 
 .tabs {
     height: 58px;
-
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-
     border-bottom: 1px solid #eee;
 }
 
 .tab {
     position: relative;
-
     height: 58px;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -839,13 +756,10 @@ input[type="range"] {
 
 .tab.active::after {
     content: "";
-
     position: absolute;
     bottom: 0;
-
     width: 49%;
     height: 2px;
-
     background: #111;
 }
 
@@ -857,11 +771,9 @@ input[type="range"] {
 .reels-icon {
     width: 29px;
     height: 29px;
-
     fill: none;
     stroke: #737981;
     stroke-width: 2;
-
     stroke-linecap: round;
     stroke-linejoin: round;
 }
@@ -869,30 +781,25 @@ input[type="range"] {
 .tag-icon {
     width: 28px;
     height: 28px;
-
     fill: none;
     stroke: #737981;
     stroke-width: 2;
 }
 
-/* =========================
+/* =====================================================
    게시물
-========================= */
+===================================================== */
 
 .posts {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-
     gap: 2px;
 }
 
 .post {
     position: relative;
-
     aspect-ratio: 1 / 1;
-
     background: #f2f2f2;
-
     cursor: grab;
 }
 
@@ -909,9 +816,9 @@ input[type="range"] {
     outline-offset: -3px;
 }
 
-/* =========================
+/* =====================================================
    모바일
-========================= */
+===================================================== */
 
 @media(max-width:800px) {
 
@@ -921,10 +828,8 @@ input[type="range"] {
 
     .editor {
         position: relative;
-
         width: 100%;
         height: auto;
-
         border-right: none;
         border-bottom: 1px solid #ddd;
     }
@@ -944,6 +849,10 @@ input[type="range"] {
 <body>
 
 <div class="app">
+
+<!-- =====================================================
+   왼쪽 편집창
+===================================================== -->
 
 <aside class="editor">
 
@@ -1019,10 +928,10 @@ memories & daily life</textarea>
     <div class="section-title">음악 배너</div>
 
     <label>노래 제목</label>
-    <input id="songTitleInput" placeholder="Film Love">
+    <input id="songTitleInput" placeholder="갖고놀래">
 
     <label>가수</label>
-    <input id="songArtistInput" placeholder="J_ust">
+    <input id="songArtistInput" placeholder="범키">
 
     <button class="editor-button" id="addMusicButton" type="button">
         음악 배너 추가
@@ -1163,6 +1072,10 @@ memories & daily life</textarea>
 
 </aside>
 
+<!-- =====================================================
+   오른쪽 미리보기
+===================================================== -->
+
 <main class="preview-area">
 
 <div class="instagram" id="captureArea">
@@ -1170,13 +1083,16 @@ memories & daily life</textarea>
 <div class="instagram-nav">
 
     <div class="nav-left">
+
         <svg class="svg-icon plus-icon" viewBox="0 0 24 24">
             <path d="M12 5v14"></path>
             <path d="M5 12h14"></path>
         </svg>
+
     </div>
 
     <div class="nav-center">
+
         <div class="nav-username" id="topUsername">
             yourusername
         </div>
@@ -1184,14 +1100,17 @@ memories & daily life</textarea>
         <svg class="svg-icon arrow-icon" viewBox="0 0 24 24">
             <path d="m7 9 5 5 5-5"></path>
         </svg>
+
     </div>
 
     <div class="nav-right">
+
         <svg class="svg-icon" viewBox="0 0 24 24">
             <path d="M4 7h16"></path>
             <path d="M4 12h16"></path>
             <path d="M4 17h16"></path>
         </svg>
+
     </div>
 
 </div>
@@ -1268,7 +1187,11 @@ memories & daily life</div>
 
 </div>
 
+<!-- 음악 배너 -->
+
 <div class="music-banner-row" id="musicBannerRow"></div>
+
+<!-- 프로필 버튼 -->
 
 <div class="profile-buttons">
 
@@ -1281,6 +1204,8 @@ memories & daily life</div>
     </div>
 
 </div>
+
+<!-- 하이라이트 -->
 
 <div class="highlights-wrapper" id="highlightsWrapper">
 
@@ -1301,6 +1226,8 @@ memories & daily life</div>
     </div>
 
 </div>
+
+<!-- 탭 -->
 
 <div class="tabs">
 
@@ -1362,9 +1289,9 @@ memories & daily life</div>
 
 <script>
 
-/* =========================
+/* =====================================================
    텍스트
-========================= */
+===================================================== */
 
 const usernameInput = document.getElementById("usernameInput");
 const nameInput = document.getElementById("nameInput");
@@ -1440,9 +1367,9 @@ shareButtonInput.addEventListener("input", () => {
 
 });
 
-/* =========================
+/* =====================================================
    스토리 링
-========================= */
+===================================================== */
 
 const storyRingToggle =
     document.getElementById("storyRingToggle");
@@ -1459,9 +1386,9 @@ storyRingToggle.addEventListener("change", () => {
 
 });
 
-/* =========================
+/* =====================================================
    사진 위치
-========================= */
+===================================================== */
 
 let selectedFrame = null;
 
@@ -1495,8 +1422,7 @@ const deletePhotoButton =
 
 function applyImageStyles(img) {
 
-    const frame =
-        img.parentElement;
+    const frame = img.parentElement;
 
     if (!frame) return;
 
@@ -1541,13 +1467,10 @@ function registerImageFrame(frame) {
 
     frame.addEventListener("click", () => {
 
-        selectedFrame =
-            frame;
+        selectedFrame = frame;
 
         const img =
-            frame.querySelector(
-                ".adjustable-image"
-            );
+            frame.querySelector(".adjustable-image");
 
         if (!img) return;
 
@@ -1572,24 +1495,17 @@ function registerImageFrame(frame) {
         zoomSlider.value =
             Math.round(scale * 100);
 
-        xSlider.value =
-            x;
-
-        ySlider.value =
-            y;
+        xSlider.value = x;
+        ySlider.value = y;
 
         zoomValue.textContent =
             Math.round(scale * 100) + "%";
 
-        xValue.textContent =
-            x;
-
-        yValue.textContent =
-            y;
+        xValue.textContent = x;
+        yValue.textContent = y;
 
         selectedPhotoName.textContent =
-            frame.dataset.label
-            || "선택한 사진";
+            frame.dataset.label || "선택한 사진";
 
     });
 
@@ -1601,9 +1517,7 @@ function updateImageTransform() {
     if (!selectedFrame) return;
 
     const img =
-        selectedFrame.querySelector(
-            ".adjustable-image"
-        );
+        selectedFrame.querySelector(".adjustable-image");
 
     if (!img) return;
 
@@ -1616,25 +1530,17 @@ function updateImageTransform() {
     const y =
         Number(ySlider.value);
 
-    img.dataset.scale =
-        scale;
-
-    img.dataset.x =
-        x;
-
-    img.dataset.y =
-        y;
+    img.dataset.scale = scale;
+    img.dataset.x = x;
+    img.dataset.y = y;
 
     applyImageStyles(img);
 
     zoomValue.textContent =
         Math.round(scale * 100) + "%";
 
-    xValue.textContent =
-        x;
-
-    yValue.textContent =
-        y;
+    xValue.textContent = x;
+    yValue.textContent = y;
 
 }
 
@@ -1642,14 +1548,13 @@ zoomSlider.addEventListener("input", updateImageTransform);
 xSlider.addEventListener("input", updateImageTransform);
 ySlider.addEventListener("input", updateImageTransform);
 
+
 resetPhotoButton.addEventListener("click", () => {
 
     if (!selectedFrame) return;
 
     const img =
-        selectedFrame.querySelector(
-            ".adjustable-image"
-        );
+        selectedFrame.querySelector(".adjustable-image");
 
     if (!img) return;
 
@@ -1672,8 +1577,7 @@ resetPhotoButton.addEventListener("click", () => {
 
 function clearPhotoSelection() {
 
-    selectedFrame =
-        null;
+    selectedFrame = null;
 
     selectedPhotoName.textContent =
         "선택된 사진 없음";
@@ -1687,9 +1591,9 @@ function clearPhotoSelection() {
 
 }
 
-/* =========================
+/* =====================================================
    프로필 사진
-========================= */
+===================================================== */
 
 const profileUpload =
     document.getElementById("profileUpload");
@@ -1701,9 +1605,8 @@ const profileFrame =
     document.getElementById("profileFrame");
 
 registerImageFrame(profileFrame);
-
-/* 여기서 초기 중앙정렬 보장 */
 applyImageStyles(profileImage);
+
 
 profileUpload.addEventListener("change", () => {
 
@@ -1736,9 +1639,9 @@ profileUpload.addEventListener("change", () => {
 
 });
 
-/* =========================
-   음악
-========================= */
+/* =====================================================
+   음악 배너
+===================================================== */
 
 const songTitleInput =
     document.getElementById("songTitleInput");
@@ -1777,31 +1680,50 @@ function createMusicBanner(title, artist) {
     banner.className =
         "music-banner";
 
-    banner.innerHTML = `
-        <svg
-            class="music-play"
-            viewBox="0 0 24 24"
-        >
-            <polygon
-                points="8,5 19,12 8,19"
-            ></polygon>
-        </svg>
 
-        <div class="music-text">
+    /*
+       재생 아이콘을 별도의 20x20 컨테이너 안에 넣어서
+       글자와 정확히 중앙 정렬되게 함
+    */
+
+    banner.innerHTML = `
+
+        <span class="music-play-wrap">
+
+            <svg
+                class="music-play"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+            >
+                <path
+                    d="M8 5.7 L18 12 L8 18.3 Z"
+                ></path>
+            </svg>
+
+        </span>
+
+        <span class="music-text">
+
             <span class="music-title"></span>
+
             <span class="music-artist"></span>
-        </div>
+
+        </span>
+
     `;
+
 
     banner
     .querySelector(".music-title")
     .textContent =
         title;
 
+
     banner
     .querySelector(".music-artist")
     .textContent =
         artist;
+
 
     musicBannerRow.appendChild(
         banner
@@ -1878,9 +1800,9 @@ addMusicButton.addEventListener("click", () => {
 
 });
 
-/* =========================
+/* =====================================================
    하이라이트
-========================= */
+===================================================== */
 
 const highlightToggle =
     document.getElementById("highlightToggle");
@@ -1912,14 +1834,10 @@ highlightToggle.addEventListener("change", () => {
         highlightToggle.checked;
 
     highlightsWrapper.style.display =
-        visible
-        ? "block"
-        : "none";
+        visible ? "block" : "none";
 
     highlightEditor.style.display =
-        visible
-        ? "block"
-        : "none";
+        visible ? "block" : "none";
 
 });
 
@@ -2006,14 +1924,13 @@ highlightUpload.addEventListener("change", () => {
 
         const addItem =
             highlightsContainer
-            .querySelector(
-                ".add-highlight-item"
-            );
+            .querySelector(".add-highlight-item");
 
         highlightsContainer.insertBefore(
             item,
             addItem
         );
+
 
         registerImageFrame(inner);
 
@@ -2087,9 +2004,7 @@ highlightUpload.addEventListener("change", () => {
 
         del.addEventListener("click", () => {
 
-            if (
-                selectedFrame === inner
-            ) {
+            if (selectedFrame === inner) {
                 clearPhotoSelection();
             }
 
@@ -2120,9 +2035,9 @@ highlightUpload.addEventListener("change", () => {
 
 });
 
-/* =========================
+/* =====================================================
    게시물
-========================= */
+===================================================== */
 
 const postsUpload =
     document.getElementById("postsUpload");
@@ -2351,9 +2266,9 @@ postsUpload.addEventListener("change", () => {
 
 });
 
-/* =========================
-   삭제
-========================= */
+/* =====================================================
+   사진 삭제
+===================================================== */
 
 deletePhotoButton.addEventListener("click", () => {
 
@@ -2381,9 +2296,7 @@ deletePhotoButton.addEventListener("click", () => {
             selectedFrame.dataset.highlightId;
 
         const item =
-            selectedFrame.closest(
-                ".highlight"
-            );
+            selectedFrame.closest(".highlight");
 
         if (item) {
             item.remove();
@@ -2391,8 +2304,7 @@ deletePhotoButton.addEventListener("click", () => {
 
 
         const editorItem =
-            highlightEditorList
-            .querySelector(
+            highlightEditorList.querySelector(
                 `[data-highlight-id="${id}"]`
             );
 
@@ -2407,9 +2319,9 @@ deletePhotoButton.addEventListener("click", () => {
 
 });
 
-/* =========================
+/* =====================================================
    이미지 로딩 대기
-========================= */
+===================================================== */
 
 async function waitForAllImages() {
 
@@ -2461,9 +2373,9 @@ async function waitForAllImages() {
 
 }
 
-/* =========================
-   사진 고정 캔버스
-========================= */
+/* =====================================================
+   PNG용 사진 고정
+===================================================== */
 
 function makeFrozenCanvas(frame, img) {
 
@@ -2485,6 +2397,7 @@ function makeFrozenCanvas(frame, img) {
 
     canvas.className =
         "export-freeze-canvas";
+
 
     canvas.width =
         Math.round(
@@ -2524,19 +2437,13 @@ function makeFrozenCanvas(frame, img) {
 
 
     const userScale =
-        Number(
-            img.dataset.scale || 1
-        );
+        Number(img.dataset.scale || 1);
 
     const xPercent =
-        Number(
-            img.dataset.x || 0
-        );
+        Number(img.dataset.x || 0);
 
     const yPercent =
-        Number(
-            img.dataset.y || 0
-        );
+        Number(img.dataset.y || 0);
 
 
     const coverScale =
@@ -2572,16 +2479,12 @@ function makeFrozenCanvas(frame, img) {
 
 
     const drawX =
-        (
-            (frameWidth - drawWidth) / 2
-            + moveX
-        );
+        (frameWidth - drawWidth) / 2
+        + moveX;
 
     const drawY =
-        (
-            (frameHeight - drawHeight) / 2
-            + moveY
-        );
+        (frameHeight - drawHeight) / 2
+        + moveY;
 
 
     ctx.scale(
@@ -2606,8 +2509,7 @@ function makeFrozenCanvas(frame, img) {
 
 function freezeAllAdjustedImages() {
 
-    const restores =
-        [];
+    const restores = [];
 
 
     const frames =
@@ -2668,9 +2570,9 @@ function freezeAllAdjustedImages() {
 
 }
 
-/* =========================
+/* =====================================================
    PNG 저장
-========================= */
+===================================================== */
 
 const saveButton =
     document.getElementById("saveButton");
@@ -2678,8 +2580,7 @@ const saveButton =
 
 saveButton.addEventListener("click", async () => {
 
-    saveButton.disabled =
-        true;
+    saveButton.disabled = true;
 
     const oldText =
         saveButton.textContent;
@@ -2728,12 +2629,8 @@ saveButton.addEventListener("click", async () => {
                     pixelRatio: 4,
                     cacheBust: true,
                     backgroundColor: "#ffffff",
-
-                    width:
-                        target.offsetWidth,
-
-                    height:
-                        target.offsetHeight
+                    width: target.offsetWidth,
+                    height: target.offsetHeight
                 }
             );
 
