@@ -6,7 +6,8 @@
 
 <title>Instagram Profile Generator</title>
 
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<!-- PNG 저장용 -->
+<script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js"></script>
 
 <style>
 * {
@@ -143,11 +144,16 @@ textarea:focus {
 
 .save-button {
     background: #0095f6;
-    color: #fff;
+    color: #ffffff;
+}
+
+.save-button:disabled {
+    opacity: .55;
+    cursor: wait;
 }
 
 .danger-button {
-    background: #fff;
+    background: #ffffff;
     border: 1px solid #e2e2e2;
     color: #ed4956;
 }
@@ -208,7 +214,7 @@ textarea:focus {
 }
 
 /* =====================================================
-   편집 리스트
+   음악/하이라이트 관리
 ===================================================== */
 
 .banner-editor-row {
@@ -307,7 +313,7 @@ input[type="range"] {
 }
 
 /* =====================================================
-   오른쪽
+   오른쪽 미리보기
 ===================================================== */
 
 .preview-area {
@@ -400,16 +406,11 @@ input[type="range"] {
     position: absolute;
     left: 50%;
     top: 50%;
-
     width: 100%;
     height: 100%;
-
     object-fit: cover;
-
     transform-origin: center center;
-
     display: block;
-
     pointer-events: none;
     user-select: none;
 }
@@ -417,6 +418,17 @@ input[type="range"] {
 .image-frame.selected-image {
     outline: 2px solid #0095f6;
     outline-offset: -2px;
+}
+
+/* 저장할 때 임시로 들어가는 고정 캔버스 */
+
+.export-freeze-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    pointer-events: none;
 }
 
 /* =====================================================
@@ -480,7 +492,8 @@ input[type="range"] {
     background: #eceff3;
 }
 
-.avatar-frame img {
+.avatar-frame img,
+.avatar-frame .export-freeze-canvas {
     border-radius: 50%;
 }
 
@@ -523,7 +536,7 @@ input[type="range"] {
 }
 
 /* =====================================================
-   음악 배너
+   음악
 ===================================================== */
 
 .music-banner-row {
@@ -548,7 +561,7 @@ input[type="range"] {
     padding: 0 15px 0 12px;
     border: 1px solid #d6d9dc;
     border-radius: 22px;
-    background: #fff;
+    background: #ffffff;
 }
 
 .music-play {
@@ -577,7 +590,6 @@ input[type="range"] {
 
 .music-artist {
     margin-left: 5px;
-    font-weight: 400;
 }
 
 /* =====================================================
@@ -650,7 +662,8 @@ input[type="range"] {
     border-radius: 50%;
 }
 
-.highlight-inner img {
+.highlight-inner img,
+.highlight-inner .export-freeze-canvas {
     border-radius: 50%;
 }
 
@@ -755,9 +768,12 @@ input[type="range"] {
     outline-offset: -3px;
 }
 
-/* 모바일 */
+/* =====================================================
+   모바일
+===================================================== */
 
 @media(max-width:800px) {
+
     .app {
         display: block;
     }
@@ -786,12 +802,19 @@ input[type="range"] {
 
 <div class="app">
 
+<!-- =====================================================
+   왼쪽 편집창
+===================================================== -->
+
 <aside class="editor">
 
 <h1>Instagram Mockup</h1>
 
 <div class="editor-section">
-    <div class="section-title">기본 정보</div>
+
+    <div class="section-title">
+        기본 정보
+    </div>
 
     <label>아이디</label>
     <input id="usernameInput" value="yourusername">
@@ -800,39 +823,60 @@ input[type="range"] {
     <input id="nameInput" value="Your Name">
 
     <label>소개</label>
+
     <textarea id="bioInput">my little archive
 memories & daily life</textarea>
 
     <label>링크</label>
     <input id="linkInput" value="example.com">
+
 </div>
 
 <div class="editor-section">
-    <div class="section-title">프로필 사진</div>
+
+    <div class="section-title">
+        프로필 사진
+    </div>
 
     <label class="upload">
+
         프로필 사진 선택
-        <input id="profileUpload" type="file" accept="image/*">
+
+        <input
+            id="profileUpload"
+            type="file"
+            accept="image/*"
+        >
+
     </label>
 
     <div class="toggle-row">
+
         <span>스토리 링 표시</span>
 
         <label class="switch">
-            <input type="checkbox" id="storyRingToggle">
+
+            <input
+                type="checkbox"
+                id="storyRingToggle"
+            >
+
             <span class="slider"></span>
+
         </label>
+
     </div>
 
-    <div class="helper">
-        켜면 인스타 스토리 그라데이션 링이 표시돼.
-    </div>
 </div>
 
 <div class="editor-section">
-    <div class="section-title">통계</div>
+
+    <div class="section-title">
+        통계
+    </div>
 
     <div class="stats-inputs">
+
         <div>
             <label>게시물</label>
             <input id="postsCountInput" value="0">
@@ -847,21 +891,38 @@ memories & daily life</textarea>
             <label>팔로잉</label>
             <input id="followingInput" value="0">
         </div>
+
     </div>
+
 </div>
 
 <div class="editor-section">
-    <div class="section-title">프로필 버튼</div>
+
+    <div class="section-title">
+        프로필 버튼
+    </div>
 
     <label>왼쪽 버튼</label>
-    <input id="editButtonInput" placeholder="비워두면 Edit profile">
+
+    <input
+        id="editButtonInput"
+        placeholder="비워두면 Edit profile"
+    >
 
     <label>오른쪽 버튼</label>
-    <input id="shareButtonInput" placeholder="비워두면 Share profile">
+
+    <input
+        id="shareButtonInput"
+        placeholder="비워두면 Share profile"
+    >
+
 </div>
 
 <div class="editor-section">
-    <div class="section-title">음악 배너</div>
+
+    <div class="section-title">
+        음악 배너
+    </div>
 
     <label>노래 제목</label>
     <input id="songTitleInput" placeholder="Film Love">
@@ -869,69 +930,128 @@ memories & daily life</textarea>
     <label>가수</label>
     <input id="songArtistInput" placeholder="J_ust">
 
-    <button class="editor-button" id="addMusicButton" type="button">
+    <button
+        class="editor-button"
+        id="addMusicButton"
+        type="button"
+    >
         음악 배너 추가
     </button>
 
-    <div id="musicEditorList" style="margin-top:8px;"></div>
+    <div
+        id="musicEditorList"
+        style="margin-top:8px;"
+    ></div>
+
 </div>
 
 <div class="editor-section">
-    <div class="section-title">하이라이트</div>
+
+    <div class="section-title">
+        하이라이트
+    </div>
 
     <div class="toggle-row">
+
         <span>하이라이트 표시</span>
 
         <label class="switch">
-            <input type="checkbox" id="highlightToggle" checked>
+
+            <input
+                type="checkbox"
+                id="highlightToggle"
+                checked
+            >
+
             <span class="slider"></span>
+
         </label>
+
     </div>
 
     <div id="highlightEditor">
 
-        <label>새 하이라이트 이름</label>
-        <input id="highlightNameInput" placeholder="daily">
+        <label>
+            새 하이라이트 이름
+        </label>
+
+        <input
+            id="highlightNameInput"
+            placeholder="daily"
+        >
 
         <label class="upload">
+
             하이라이트 사진 추가
-            <input id="highlightUpload" type="file" accept="image/*">
+
+            <input
+                id="highlightUpload"
+                type="file"
+                accept="image/*"
+            >
+
         </label>
 
         <div id="highlightEditorList"></div>
+
     </div>
+
 </div>
 
 <div class="editor-section">
-    <div class="section-title">게시물 사진</div>
+
+    <div class="section-title">
+        게시물 사진
+    </div>
 
     <label class="upload">
+
         게시물 사진 추가
-        <input id="postsUpload" type="file" accept="image/*" multiple>
+
+        <input
+            id="postsUpload"
+            type="file"
+            accept="image/*"
+            multiple
+        >
+
     </label>
 
     <div class="helper">
-        추가 후 오른쪽 게시물을 끌어서 순서를 바꿀 수 있어.
+        오른쪽 게시물을 끌어서 순서를 바꿀 수 있어.
     </div>
+
 </div>
 
 <div class="editor-section">
-    <div class="section-title">사진 위치 조정</div>
+
+    <div class="section-title">
+        사진 위치 조정
+    </div>
 
     <div class="photo-editor-box">
 
-        <div class="selected-photo-name" id="selectedPhotoName">
+        <div
+            class="selected-photo-name"
+            id="selectedPhotoName"
+        >
             선택된 사진 없음
         </div>
 
         <div class="photo-help">
-            오른쪽 사진을 선택한 뒤 확대와 가로/세로 위치를 조절해.
+            오른쪽 사진을 선택한 다음 확대와 가로·세로 위치를 조절해.
         </div>
 
         <div class="range-row">
+
             <div class="range-head">
                 <span>확대</span>
-                <span class="range-value" id="zoomValue">100%</span>
+                <span
+                    class="range-value"
+                    id="zoomValue"
+                >
+                    100%
+                </span>
             </div>
 
             <input
@@ -942,12 +1062,19 @@ memories & daily life</textarea>
                 value="100"
                 disabled
             >
+
         </div>
 
         <div class="range-row">
+
             <div class="range-head">
                 <span>가로 위치</span>
-                <span class="range-value" id="xValue">0</span>
+                <span
+                    class="range-value"
+                    id="xValue"
+                >
+                    0
+                </span>
             </div>
 
             <input
@@ -958,12 +1085,19 @@ memories & daily life</textarea>
                 value="0"
                 disabled
             >
+
         </div>
 
         <div class="range-row">
+
             <div class="range-head">
                 <span>세로 위치</span>
-                <span class="range-value" id="yValue">0</span>
+                <span
+                    class="range-value"
+                    id="yValue"
+                >
+                    0
+                </span>
             </div>
 
             <input
@@ -974,6 +1108,7 @@ memories & daily life</textarea>
                 value="0"
                 disabled
             >
+
         </div>
 
         <button
@@ -996,6 +1131,7 @@ memories & daily life</textarea>
         </button>
 
     </div>
+
 </div>
 
 <button
@@ -1008,38 +1144,67 @@ memories & daily life</textarea>
 
 </aside>
 
+<!-- =====================================================
+   오른쪽
+===================================================== -->
+
 <main class="preview-area">
 
-<div class="instagram" id="captureArea">
+<div
+    class="instagram"
+    id="captureArea"
+>
+
+<!-- 상단 -->
 
 <div class="instagram-nav">
 
     <div class="nav-left">
-        <svg class="svg-icon plus-icon" viewBox="0 0 24 24">
+
+        <svg
+            class="svg-icon plus-icon"
+            viewBox="0 0 24 24"
+        >
             <path d="M12 5v14"></path>
             <path d="M5 12h14"></path>
         </svg>
+
     </div>
 
     <div class="nav-center">
-        <div class="nav-username" id="topUsername">
+
+        <div
+            class="nav-username"
+            id="topUsername"
+        >
             yourusername
         </div>
 
-        <svg class="svg-icon arrow-icon" viewBox="0 0 24 24">
+        <svg
+            class="svg-icon arrow-icon"
+            viewBox="0 0 24 24"
+        >
             <path d="m7 9 5 5 5-5"></path>
         </svg>
+
     </div>
 
     <div class="nav-right">
-        <svg class="svg-icon" viewBox="0 0 24 24">
+
+        <svg
+            class="svg-icon"
+            viewBox="0 0 24 24"
+        >
             <path d="M4 7h16"></path>
             <path d="M4 12h16"></path>
             <path d="M4 17h16"></path>
         </svg>
+
     </div>
 
 </div>
+
+<!-- 프로필 -->
 
 <div class="profile-main">
 
@@ -1047,7 +1212,10 @@ memories & daily life</textarea>
 
     <div class="avatar-wrap">
 
-        <div class="avatar-story-shell" id="avatarStoryShell">
+        <div
+            class="avatar-story-shell"
+            id="avatarStoryShell"
+        >
 
             <div class="avatar-story-gap">
 
@@ -1098,14 +1266,23 @@ memories & daily life</textarea>
 
 <div class="bio">
 
-    <div class="profile-name" id="profileName">
+    <div
+        class="profile-name"
+        id="profileName"
+    >
         Your Name
     </div>
 
-    <div class="bio-text" id="profileBio">my little archive
+    <div
+        class="bio-text"
+        id="profileBio"
+    >my little archive
 memories & daily life</div>
 
-    <div class="profile-link" id="profileLink">
+    <div
+        class="profile-link"
+        id="profileLink"
+    >
         example.com
     </div>
 
@@ -1113,23 +1290,44 @@ memories & daily life</div>
 
 </div>
 
-<div class="music-banner-row" id="musicBannerRow"></div>
+<!-- 음악 -->
+
+<div
+    class="music-banner-row"
+    id="musicBannerRow"
+></div>
+
+<!-- 버튼 -->
 
 <div class="profile-buttons">
 
-    <div class="profile-button" id="editProfileButtonText">
+    <div
+        class="profile-button"
+        id="editProfileButtonText"
+    >
         Edit profile
     </div>
 
-    <div class="profile-button" id="shareProfileButtonText">
+    <div
+        class="profile-button"
+        id="shareProfileButtonText"
+    >
         Share profile
     </div>
 
 </div>
 
-<div class="highlights-wrapper" id="highlightsWrapper">
+<!-- 하이라이트 -->
 
-    <div class="highlights" id="highlightsContainer">
+<div
+    class="highlights-wrapper"
+    id="highlightsWrapper"
+>
+
+    <div
+        class="highlights"
+        id="highlightsContainer"
+    >
 
         <div class="highlight add-highlight-item">
 
@@ -1147,11 +1345,17 @@ memories & daily life</div>
 
 </div>
 
+<!-- 탭 -->
+
 <div class="tabs">
 
     <div class="tab active">
 
-        <svg class="grid-icon" viewBox="0 0 24 24" fill="#101418">
+        <svg
+            class="grid-icon"
+            viewBox="0 0 24 24"
+            fill="#101418"
+        >
 
             <rect x="3" y="3" width="5" height="5" rx="1"></rect>
             <rect x="10" y="3" width="5" height="5" rx="1"></rect>
@@ -1171,7 +1375,10 @@ memories & daily life</div>
 
     <div class="tab">
 
-        <svg class="reels-icon" viewBox="0 0 24 24">
+        <svg
+            class="reels-icon"
+            viewBox="0 0 24 24"
+        >
 
             <rect
                 x="4"
@@ -1191,7 +1398,10 @@ memories & daily life</div>
 
     <div class="tab">
 
-        <svg class="tag-icon" viewBox="0 0 24 24">
+        <svg
+            class="tag-icon"
+            viewBox="0 0 24 24"
+        >
 
             <rect
                 x="4"
@@ -1213,7 +1423,10 @@ memories & daily life</div>
 
 </div>
 
-<div class="posts" id="postsContainer"></div>
+<div
+    class="posts"
+    id="postsContainer"
+></div>
 
 </div>
 
@@ -1224,132 +1437,92 @@ memories & daily life</div>
 <script>
 
 /* =====================================================
-텍스트
+   기본 텍스트
 ===================================================== */
 
-const usernameInput =
-document.getElementById("usernameInput");
+const usernameInput = document.getElementById("usernameInput");
+const nameInput = document.getElementById("nameInput");
+const bioInput = document.getElementById("bioInput");
+const linkInput = document.getElementById("linkInput");
 
-const nameInput =
-document.getElementById("nameInput");
+const postsCountInput = document.getElementById("postsCountInput");
+const followersInput = document.getElementById("followersInput");
+const followingInput = document.getElementById("followingInput");
 
-const bioInput =
-document.getElementById("bioInput");
+const editButtonInput = document.getElementById("editButtonInput");
+const shareButtonInput = document.getElementById("shareButtonInput");
 
-const linkInput =
-document.getElementById("linkInput");
+const topUsername = document.getElementById("topUsername");
+const profileName = document.getElementById("profileName");
+const profileBio = document.getElementById("profileBio");
+const profileLink = document.getElementById("profileLink");
 
-const postsCountInput =
-document.getElementById("postsCountInput");
+const postsCount = document.getElementById("postsCount");
+const followersCount = document.getElementById("followersCount");
+const followingCount = document.getElementById("followingCount");
 
-const followersInput =
-document.getElementById("followersInput");
-
-const followingInput =
-document.getElementById("followingInput");
-
-const editButtonInput =
-document.getElementById("editButtonInput");
-
-const shareButtonInput =
-document.getElementById("shareButtonInput");
-
-const topUsername =
-document.getElementById("topUsername");
-
-const profileName =
-document.getElementById("profileName");
-
-const profileBio =
-document.getElementById("profileBio");
-
-const profileLink =
-document.getElementById("profileLink");
-
-const postsCount =
-document.getElementById("postsCount");
-
-const followersCount =
-document.getElementById("followersCount");
-
-const followingCount =
-document.getElementById("followingCount");
-
-const editProfileButtonText =
-document.getElementById("editProfileButtonText");
-
-const shareProfileButtonText =
-document.getElementById("shareProfileButtonText");
-
+const editProfileButtonText = document.getElementById("editProfileButtonText");
+const shareProfileButtonText = document.getElementById("shareProfileButtonText");
 
 usernameInput.addEventListener("input", () => {
     topUsername.textContent =
-    usernameInput.value || "username";
+        usernameInput.value || "username";
 });
 
 nameInput.addEventListener("input", () => {
-    profileName.textContent =
-    nameInput.value;
+    profileName.textContent = nameInput.value;
 });
 
 bioInput.addEventListener("input", () => {
-    profileBio.textContent =
-    bioInput.value;
+    profileBio.textContent = bioInput.value;
 });
 
 linkInput.addEventListener("input", () => {
 
-    profileLink.textContent =
-    linkInput.value;
+    profileLink.textContent = linkInput.value;
 
     profileLink.style.display =
-    linkInput.value
-    ? "block"
-    : "none";
+        linkInput.value ? "block" : "none";
 
 });
 
 postsCountInput.addEventListener("input", () => {
-    postsCount.textContent =
-    postsCountInput.value;
+    postsCount.textContent = postsCountInput.value;
 });
 
 followersInput.addEventListener("input", () => {
-    followersCount.textContent =
-    followersInput.value;
+    followersCount.textContent = followersInput.value;
 });
 
 followingInput.addEventListener("input", () => {
-    followingCount.textContent =
-    followingInput.value;
+    followingCount.textContent = followingInput.value;
 });
 
 editButtonInput.addEventListener("input", () => {
 
     editProfileButtonText.textContent =
-    editButtonInput.value.trim()
-    || "Edit profile";
+        editButtonInput.value.trim()
+        || "Edit profile";
 
 });
 
 shareButtonInput.addEventListener("input", () => {
 
     shareProfileButtonText.textContent =
-    shareButtonInput.value.trim()
-    || "Share profile";
+        shareButtonInput.value.trim()
+        || "Share profile";
 
 });
 
-
 /* =====================================================
-스토리 링
+   스토리 링
 ===================================================== */
 
 const storyRingToggle =
-document.getElementById("storyRingToggle");
+    document.getElementById("storyRingToggle");
 
 const avatarStoryShell =
-document.getElementById("avatarStoryShell");
+    document.getElementById("avatarStoryShell");
 
 storyRingToggle.addEventListener("change", () => {
 
@@ -1360,94 +1533,79 @@ storyRingToggle.addEventListener("change", () => {
 
 });
 
-
 /* =====================================================
-사진 슬라이더
+   사진 이동
 ===================================================== */
 
 let selectedFrame = null;
 
 const selectedPhotoName =
-document.getElementById("selectedPhotoName");
+    document.getElementById("selectedPhotoName");
 
 const zoomSlider =
-document.getElementById("zoomSlider");
+    document.getElementById("zoomSlider");
 
 const xSlider =
-document.getElementById("xSlider");
+    document.getElementById("xSlider");
 
 const ySlider =
-document.getElementById("ySlider");
+    document.getElementById("ySlider");
 
 const zoomValue =
-document.getElementById("zoomValue");
+    document.getElementById("zoomValue");
 
 const xValue =
-document.getElementById("xValue");
+    document.getElementById("xValue");
 
 const yValue =
-document.getElementById("yValue");
+    document.getElementById("yValue");
 
 const resetPhotoButton =
-document.getElementById("resetPhotoButton");
+    document.getElementById("resetPhotoButton");
 
 const deletePhotoButton =
-document.getElementById("deletePhotoButton");
+    document.getElementById("deletePhotoButton");
 
-
-/*
-핵심 수정:
-x/y는 -100~100의 "비율값"이고,
-실제 px 이동량은 확대 배율에 따라 자동 계산.
-*/
 
 function applyImageStyles(img) {
 
-    const frame =
-    img.parentElement;
+    const frame = img.parentElement;
 
-    if(!frame) return;
+    if (!frame) return;
 
     const scale =
-    Number(img.dataset.scale || 1);
+        Number(img.dataset.scale || 1);
 
     const xPercent =
-    Number(img.dataset.x || 0);
+        Number(img.dataset.x || 0);
 
     const yPercent =
-    Number(img.dataset.y || 0);
+        Number(img.dataset.y || 0);
 
     const frameWidth =
-    frame.clientWidth;
+        frame.clientWidth;
 
     const frameHeight =
-    frame.clientHeight;
-
-    /*
-    확대 후 남는 크기의 절반까지만 이동 가능.
-    scale 1 = 이동 0
-    scale 2 = 좌우/상하 각각 프레임의 50%까지 이동
-    scale 3 = 프레임 크기만큼 이동 가능
-    */
+        frame.clientHeight;
 
     const maxMoveX =
-    ((scale - 1) * frameWidth) / 2;
+        ((scale - 1) * frameWidth) / 2;
 
     const maxMoveY =
-    ((scale - 1) * frameHeight) / 2;
+        ((scale - 1) * frameHeight) / 2;
 
     const moveX =
-    (xPercent / 100) * maxMoveX;
+        (xPercent / 100) * maxMoveX;
 
     const moveY =
-    (yPercent / 100) * maxMoveY;
+        (yPercent / 100) * maxMoveY;
 
     img.style.transform =
-    `translate(
-        calc(-50% + ${moveX}px),
-        calc(-50% + ${moveY}px)
-    )
-    scale(${scale})`;
+        `translate(
+            calc(-50% + ${moveX}px),
+            calc(-50% + ${moveY}px)
+        )
+        scale(${scale})`;
 
 }
 
@@ -1467,18 +1625,18 @@ function registerImageFrame(frame) {
         selectedFrame = frame;
 
         const img =
-        frame.querySelector(".adjustable-image");
+            frame.querySelector(".adjustable-image");
 
-        if(!img) return;
+        if (!img) return;
 
         const scale =
-        Number(img.dataset.scale || 1);
+            Number(img.dataset.scale || 1);
 
         const x =
-        Number(img.dataset.x || 0);
+            Number(img.dataset.x || 0);
 
         const y =
-        Number(img.dataset.y || 0);
+            Number(img.dataset.y || 0);
 
         zoomSlider.disabled = false;
         xSlider.disabled = false;
@@ -1487,22 +1645,22 @@ function registerImageFrame(frame) {
         resetPhotoButton.disabled = false;
 
         deletePhotoButton.disabled =
-        frame.dataset.type === "profile";
+            frame.dataset.type === "profile";
 
         zoomSlider.value =
-        Math.round(scale * 100);
+            Math.round(scale * 100);
 
         xSlider.value = x;
         ySlider.value = y;
 
         zoomValue.textContent =
-        Math.round(scale * 100) + "%";
+            Math.round(scale * 100) + "%";
 
         xValue.textContent = x;
         yValue.textContent = y;
 
         selectedPhotoName.textContent =
-        frame.dataset.label || "선택한 사진";
+            frame.dataset.label || "선택한 사진";
 
     });
 
@@ -1511,23 +1669,21 @@ function registerImageFrame(frame) {
 
 function updateImageTransform() {
 
-    if(!selectedFrame) return;
+    if (!selectedFrame) return;
 
     const img =
-    selectedFrame.querySelector(
-        ".adjustable-image"
-    );
+        selectedFrame.querySelector(".adjustable-image");
 
-    if(!img) return;
+    if (!img) return;
 
     const scale =
-    Number(zoomSlider.value) / 100;
+        Number(zoomSlider.value) / 100;
 
     const x =
-    Number(xSlider.value);
+        Number(xSlider.value);
 
     const y =
-    Number(ySlider.value);
+        Number(ySlider.value);
 
     img.dataset.scale = scale;
     img.dataset.x = x;
@@ -1536,40 +1692,26 @@ function updateImageTransform() {
     applyImageStyles(img);
 
     zoomValue.textContent =
-    Math.round(scale * 100) + "%";
+        Math.round(scale * 100) + "%";
 
     xValue.textContent = x;
     yValue.textContent = y;
 
 }
 
-
-zoomSlider.addEventListener(
-"input",
-updateImageTransform
-);
-
-xSlider.addEventListener(
-"input",
-updateImageTransform
-);
-
-ySlider.addEventListener(
-"input",
-updateImageTransform
-);
+zoomSlider.addEventListener("input", updateImageTransform);
+xSlider.addEventListener("input", updateImageTransform);
+ySlider.addEventListener("input", updateImageTransform);
 
 
 resetPhotoButton.addEventListener("click", () => {
 
-    if(!selectedFrame) return;
+    if (!selectedFrame) return;
 
     const img =
-    selectedFrame.querySelector(
-        ".adjustable-image"
-    );
+        selectedFrame.querySelector(".adjustable-image");
 
-    if(!img) return;
+    if (!img) return;
 
     img.dataset.scale = 1;
     img.dataset.x = 0;
@@ -1590,7 +1732,7 @@ resetPhotoButton.addEventListener("click", () => {
 
 function clearPhotoSelection() {
 
-    if(selectedFrame) {
+    if (selectedFrame) {
 
         selectedFrame.classList.remove(
             "selected-image"
@@ -1601,7 +1743,7 @@ function clearPhotoSelection() {
     selectedFrame = null;
 
     selectedPhotoName.textContent =
-    "선택된 사진 없음";
+        "선택된 사진 없음";
 
     zoomSlider.disabled = true;
     xSlider.disabled = true;
@@ -1612,46 +1754,43 @@ function clearPhotoSelection() {
 
 }
 
-
 /* =====================================================
-프로필 사진
+   프로필 사진
 ===================================================== */
 
 const profileUpload =
-document.getElementById("profileUpload");
+    document.getElementById("profileUpload");
 
 const profileImage =
-document.getElementById("profileImage");
+    document.getElementById("profileImage");
 
 const profileFrame =
-document.getElementById("profileFrame");
+    document.getElementById("profileFrame");
 
 registerImageFrame(profileFrame);
-
-applyImageStyles(profileImage);
 
 profileUpload.addEventListener("change", () => {
 
     const file =
-    profileUpload.files[0];
+        profileUpload.files[0];
 
-    if(!file) return;
+    if (!file) return;
 
     const reader =
-    new FileReader();
+        new FileReader();
 
     reader.onload = e => {
 
         profileImage.src =
-        e.target.result;
+            e.target.result;
 
         profileImage.dataset.scale = 1;
         profileImage.dataset.x = 0;
         profileImage.dataset.y = 0;
 
-        requestAnimationFrame(() => {
+        profileImage.onload = () => {
             applyImageStyles(profileImage);
-        });
+        };
 
     };
 
@@ -1659,54 +1798,48 @@ profileUpload.addEventListener("change", () => {
 
 });
 
-
 /* =====================================================
-음악 배너
+   음악 배너
 ===================================================== */
 
 const songTitleInput =
-document.getElementById("songTitleInput");
+    document.getElementById("songTitleInput");
 
 const songArtistInput =
-document.getElementById("songArtistInput");
+    document.getElementById("songArtistInput");
 
 const addMusicButton =
-document.getElementById("addMusicButton");
+    document.getElementById("addMusicButton");
 
 const musicBannerRow =
-document.getElementById("musicBannerRow");
+    document.getElementById("musicBannerRow");
 
 const musicEditorList =
-document.getElementById("musicEditorList");
-
-let musicCounter = 0;
+    document.getElementById("musicEditorList");
 
 
 function updateMusicVisibility() {
 
     const count =
-    musicBannerRow
-    .querySelectorAll(".music-banner")
-    .length;
+        musicBannerRow
+        .querySelectorAll(".music-banner")
+        .length;
 
     musicBannerRow.style.display =
-    count ? "flex" : "none";
+        count ? "flex" : "none";
 
 }
 
 
 function createMusicBanner(title, artist) {
 
-    musicCounter++;
-
     const banner =
-    document.createElement("div");
+        document.createElement("div");
 
     banner.className =
-    "music-banner";
+        "music-banner";
 
     banner.innerHTML = `
-
         <svg
             class="music-play"
             viewBox="0 0 24 24"
@@ -1717,53 +1850,46 @@ function createMusicBanner(title, artist) {
         </svg>
 
         <div class="music-text">
-
             <span class="music-title"></span>
-
             <span class="music-artist"></span>
-
         </div>
     `;
 
-    banner
-    .querySelector(".music-title")
-    .textContent = title;
+    banner.querySelector(".music-title")
+        .textContent = title;
 
-    banner
-    .querySelector(".music-artist")
-    .textContent = artist;
+    banner.querySelector(".music-artist")
+        .textContent = artist;
 
     musicBannerRow.appendChild(banner);
 
 
     const editor =
-    document.createElement("div");
+        document.createElement("div");
 
     editor.className =
-    "banner-editor-row";
-
+        "banner-editor-row";
 
     const text =
-    document.createElement("div");
+        document.createElement("div");
 
     text.className =
-    "banner-editor-text";
+        "banner-editor-text";
 
     text.textContent =
-    `${title}  ${artist}`;
-
+        `${title}  ${artist}`;
 
     const del =
-    document.createElement("button");
+        document.createElement("button");
 
     del.className =
-    "small-delete";
+        "small-delete";
 
-    del.type = "button";
+    del.type =
+        "button";
 
     del.textContent =
-    "삭제";
-
+        "삭제";
 
     del.addEventListener("click", () => {
 
@@ -1773,7 +1899,6 @@ function createMusicBanner(title, artist) {
         updateMusicVisibility();
 
     });
-
 
     editor.appendChild(text);
     editor.appendChild(del);
@@ -1788,12 +1913,12 @@ function createMusicBanner(title, artist) {
 addMusicButton.addEventListener("click", () => {
 
     const title =
-    songTitleInput.value.trim();
+        songTitleInput.value.trim();
 
     const artist =
-    songArtistInput.value.trim();
+        songArtistInput.value.trim();
 
-    if(!title && !artist) return;
+    if (!title && !artist) return;
 
     createMusicBanner(
         title || "Song",
@@ -1805,31 +1930,30 @@ addMusicButton.addEventListener("click", () => {
 
 });
 
-
 /* =====================================================
-하이라이트
+   하이라이트
 ===================================================== */
 
 const highlightToggle =
-document.getElementById("highlightToggle");
+    document.getElementById("highlightToggle");
 
 const highlightsWrapper =
-document.getElementById("highlightsWrapper");
+    document.getElementById("highlightsWrapper");
 
 const highlightEditor =
-document.getElementById("highlightEditor");
+    document.getElementById("highlightEditor");
 
 const highlightUpload =
-document.getElementById("highlightUpload");
+    document.getElementById("highlightUpload");
 
 const highlightNameInput =
-document.getElementById("highlightNameInput");
+    document.getElementById("highlightNameInput");
 
 const highlightsContainer =
-document.getElementById("highlightsContainer");
+    document.getElementById("highlightsContainer");
 
 const highlightEditorList =
-document.getElementById("highlightEditorList");
+    document.getElementById("highlightEditorList");
 
 let highlightCounter = 0;
 
@@ -1837,13 +1961,13 @@ let highlightCounter = 0;
 highlightToggle.addEventListener("change", () => {
 
     const visible =
-    highlightToggle.checked;
+        highlightToggle.checked;
 
     highlightsWrapper.style.display =
-    visible ? "block" : "none";
+        visible ? "block" : "none";
 
     highlightEditor.style.display =
-    visible ? "block" : "none";
+        visible ? "block" : "none";
 
 });
 
@@ -1851,62 +1975,61 @@ highlightToggle.addEventListener("change", () => {
 highlightUpload.addEventListener("change", () => {
 
     const file =
-    highlightUpload.files[0];
+        highlightUpload.files[0];
 
-    if(!file) return;
+    if (!file) return;
 
     highlightCounter++;
 
     const id =
-    `highlight-${highlightCounter}`;
+        `highlight-${highlightCounter}`;
 
     const reader =
-    new FileReader();
-
+        new FileReader();
 
     reader.onload = e => {
 
         const item =
-        document.createElement("div");
+            document.createElement("div");
 
         item.className =
-        "highlight";
+            "highlight";
 
         item.dataset.highlightId =
-        id;
+            id;
 
 
         const frame =
-        document.createElement("div");
+            document.createElement("div");
 
         frame.className =
-        "highlight-frame";
+            "highlight-frame";
 
 
         const inner =
-        document.createElement("div");
+            document.createElement("div");
 
         inner.className =
-        "highlight-inner image-frame";
+            "highlight-inner image-frame";
 
         inner.dataset.type =
-        "highlight";
+            "highlight";
 
         inner.dataset.label =
-        `하이라이트 ${highlightCounter}`;
+            `하이라이트 ${highlightCounter}`;
 
         inner.dataset.highlightId =
-        id;
+            id;
 
 
         const img =
-        document.createElement("img");
+            document.createElement("img");
 
         img.className =
-        "adjustable-image";
+            "adjustable-image";
 
         img.src =
-        e.target.result;
+            e.target.result;
 
         img.dataset.scale = 1;
         img.dataset.x = 0;
@@ -1914,14 +2037,14 @@ highlightUpload.addEventListener("change", () => {
 
 
         const name =
-        document.createElement("div");
+            document.createElement("div");
 
         name.className =
-        "highlight-name";
+            "highlight-name";
 
         name.textContent =
-        highlightNameInput.value.trim()
-        || "highlight";
+            highlightNameInput.value.trim()
+            || "highlight";
 
 
         inner.appendChild(img);
@@ -1932,10 +2055,10 @@ highlightUpload.addEventListener("change", () => {
 
 
         const addItem =
-        highlightsContainer
-        .querySelector(
-            ".add-highlight-item"
-        );
+            highlightsContainer
+            .querySelector(
+                ".add-highlight-item"
+            );
 
         highlightsContainer.insertBefore(
             item,
@@ -1944,71 +2067,73 @@ highlightUpload.addEventListener("change", () => {
 
         registerImageFrame(inner);
 
-        requestAnimationFrame(() => {
+        img.onload = () => {
             applyImageStyles(img);
-        });
+        };
 
 
         const editorItem =
-        document.createElement("div");
+            document.createElement("div");
 
         editorItem.className =
-        "highlight-editor-item";
+            "highlight-editor-item";
 
         editorItem.dataset.highlightId =
-        id;
+            id;
 
 
         const editorTop =
-        document.createElement("div");
+            document.createElement("div");
 
         editorTop.className =
-        "highlight-editor-top";
+            "highlight-editor-top";
 
 
         const label =
-        document.createElement("div");
+            document.createElement("div");
 
         label.className =
-        "highlight-editor-label";
+            "highlight-editor-label";
 
         label.textContent =
-        `하이라이트 ${highlightCounter}`;
+            `하이라이트 ${highlightCounter}`;
 
 
         const del =
-        document.createElement("button");
+            document.createElement("button");
 
         del.className =
-        "small-delete";
+            "small-delete";
 
-        del.type = "button";
+        del.type =
+            "button";
 
         del.textContent =
-        "삭제";
+            "삭제";
 
 
         const nameInput =
-        document.createElement("input");
+            document.createElement("input");
 
         nameInput.value =
-        name.textContent;
+            name.textContent;
 
         nameInput.placeholder =
-        "하이라이트 이름";
+            "하이라이트 이름";
 
 
         nameInput.addEventListener("input", () => {
 
             name.textContent =
-            nameInput.value || "highlight";
+                nameInput.value
+                || "highlight";
 
         });
 
 
         del.addEventListener("click", () => {
 
-            if(selectedFrame === inner) {
+            if (selectedFrame === inner) {
                 clearPhotoSelection();
             }
 
@@ -2028,27 +2153,24 @@ highlightUpload.addEventListener("change", () => {
             editorItem
         );
 
-
         highlightNameInput.value = "";
         highlightUpload.value = "";
 
     };
 
-
     reader.readAsDataURL(file);
 
 });
 
-
 /* =====================================================
-게시물
+   게시물
 ===================================================== */
 
 const postsUpload =
-document.getElementById("postsUpload");
+    document.getElementById("postsUpload");
 
 const postsContainer =
-document.getElementById("postsContainer");
+    document.getElementById("postsContainer");
 
 let postCounter = 0;
 let draggedPost = null;
@@ -2057,36 +2179,44 @@ let draggedPost = null;
 function updatePostCount() {
 
     const count =
-    postsContainer
-    .querySelectorAll(".post")
-    .length;
+        postsContainer
+        .querySelectorAll(".post")
+        .length;
 
-    postsCountInput.value = count;
-    postsCount.textContent = count;
+    postsCountInput.value =
+        count;
+
+    postsCount.textContent =
+        count;
 
 }
 
 
 function registerPostDrag(post) {
 
-    post.draggable = true;
-
+    post.draggable =
+        true;
 
     post.addEventListener("dragstart", e => {
 
-        draggedPost = post;
+        draggedPost =
+            post;
 
-        post.classList.add("dragging");
+        post.classList.add(
+            "dragging"
+        );
 
         e.dataTransfer.effectAllowed =
-        "move";
+            "move";
 
     });
 
 
     post.addEventListener("dragend", () => {
 
-        post.classList.remove("dragging");
+        post.classList.remove(
+            "dragging"
+        );
 
         document
         .querySelectorAll(".post")
@@ -2098,7 +2228,8 @@ function registerPostDrag(post) {
 
         });
 
-        draggedPost = null;
+        draggedPost =
+            null;
 
     });
 
@@ -2107,7 +2238,7 @@ function registerPostDrag(post) {
 
         e.preventDefault();
 
-        if(
+        if (
             !draggedPost ||
             draggedPost === post
         ) return;
@@ -2136,37 +2267,39 @@ function registerPostDrag(post) {
             "drag-target"
         );
 
-        if(
+        if (
             !draggedPost ||
             draggedPost === post
         ) return;
 
-
         const posts =
-        Array.from(
-            postsContainer.children
-        );
-
+            Array.from(
+                postsContainer.children
+            );
 
         const draggedIndex =
-        posts.indexOf(
-            draggedPost
-        );
+            posts.indexOf(
+                draggedPost
+            );
 
         const targetIndex =
-        posts.indexOf(
-            post
-        );
+            posts.indexOf(
+                post
+            );
 
-
-        if(draggedIndex < targetIndex) {
+        if (
+            draggedIndex <
+            targetIndex
+        ) {
 
             postsContainer.insertBefore(
                 draggedPost,
                 post.nextSibling
             );
 
-        } else {
+        }
+
+        else {
 
             postsContainer.insertBefore(
                 draggedPost,
@@ -2183,45 +2316,42 @@ function registerPostDrag(post) {
 postsUpload.addEventListener("change", () => {
 
     const files =
-    Array.from(
-        postsUpload.files
-    );
+        Array.from(
+            postsUpload.files
+        );
 
-    if(!files.length) return;
-
+    if (!files.length) return;
 
     files.forEach(file => {
 
         const reader =
-        new FileReader();
-
+            new FileReader();
 
         reader.onload = e => {
 
             postCounter++;
 
-
             const post =
-            document.createElement("div");
+                document.createElement("div");
 
             post.className =
-            "post image-frame";
+                "post image-frame";
 
             post.dataset.type =
-            "post";
+                "post";
 
             post.dataset.label =
-            `게시물 사진 ${postCounter}`;
+                `게시물 사진 ${postCounter}`;
 
 
             const img =
-            document.createElement("img");
+                document.createElement("img");
 
             img.className =
-            "adjustable-image";
+                "adjustable-image";
 
             img.src =
-            e.target.result;
+                e.target.result;
 
             img.dataset.scale = 1;
             img.dataset.x = 0;
@@ -2230,48 +2360,46 @@ postsUpload.addEventListener("change", () => {
 
             post.appendChild(img);
 
-            postsContainer.appendChild(post);
+            postsContainer.appendChild(
+                post
+            );
 
             registerImageFrame(post);
             registerPostDrag(post);
 
-            requestAnimationFrame(() => {
+            img.onload = () => {
                 applyImageStyles(img);
-            });
+            };
 
             updatePostCount();
 
         };
 
-
         reader.readAsDataURL(file);
 
     });
-
 
     postsUpload.value = "";
 
 });
 
-
 /* =====================================================
-사진 삭제
+   선택한 사진 삭제
 ===================================================== */
 
 deletePhotoButton.addEventListener("click", () => {
 
-    if(!selectedFrame) return;
+    if (!selectedFrame) return;
 
     const type =
-    selectedFrame.dataset.type;
+        selectedFrame.dataset.type;
 
 
-    if(type === "post") {
+    if (type === "post") {
 
         selectedFrame.remove();
 
         clearPhotoSelection();
-
         updatePostCount();
 
         return;
@@ -2279,27 +2407,27 @@ deletePhotoButton.addEventListener("click", () => {
     }
 
 
-    if(type === "highlight") {
+    if (type === "highlight") {
 
         const id =
-        selectedFrame.dataset.highlightId;
+            selectedFrame.dataset.highlightId;
 
         const item =
-        selectedFrame.closest(
-            ".highlight"
-        );
+            selectedFrame.closest(
+                ".highlight"
+            );
 
-        if(item) {
+        if (item) {
             item.remove();
         }
 
-
         const editorItem =
-        highlightEditorList.querySelector(
-            `[data-highlight-id="${id}"]`
-        );
+            highlightEditorList
+            .querySelector(
+                `[data-highlight-id="${id}"]`
+            );
 
-        if(editorItem) {
+        if (editorItem) {
             editorItem.remove();
         }
 
@@ -2309,69 +2437,454 @@ deletePhotoButton.addEventListener("click", () => {
 
 });
 
-
 /* =====================================================
-PNG 저장
+   모든 이미지 로딩 대기
 ===================================================== */
 
-document
-.getElementById("saveButton")
-.addEventListener("click", async () => {
+async function waitForAllImages() {
 
-    const selected =
-    document.querySelector(
-        ".selected-image"
-    );
-
-    if(selected) {
-        selected.classList.remove(
-            "selected-image"
+    const images =
+        Array.from(
+            document.querySelectorAll(
+                "#captureArea img"
+            )
         );
-    }
 
+    await Promise.all(
+        images.map(async img => {
 
-    const target =
-    document.getElementById(
-        "captureArea"
+            if (
+                img.complete &&
+                img.naturalWidth > 0
+            ) {
+
+                try {
+                    await img.decode();
+                } catch (e) {}
+
+                return;
+            }
+
+            await new Promise(resolve => {
+
+                img.addEventListener(
+                    "load",
+                    resolve,
+                    { once: true }
+                );
+
+                img.addEventListener(
+                    "error",
+                    resolve,
+                    { once: true }
+                );
+
+            });
+
+        })
     );
 
+}
+
+/* =====================================================
+   사진을 현재 화면 그대로 캔버스로 고정
+===================================================== */
+
+function makeFrozenCanvas(frame, img) {
+
+    const frameRect =
+        frame.getBoundingClientRect();
+
+    const frameWidth =
+        frameRect.width;
+
+    const frameHeight =
+        frameRect.height;
+
+    const exportScale =
+        4;
 
     const canvas =
-    await html2canvas(
-        target,
-        {
-            scale: 3,
-            backgroundColor: "#ffffff",
-            useCORS: true
-        }
-    );
+        document.createElement("canvas");
 
+    canvas.className =
+        "export-freeze-canvas";
 
-    if(selected) {
-        selected.classList.add(
-            "selected-image"
+    canvas.width =
+        Math.round(
+            frameWidth * exportScale
         );
+
+    canvas.height =
+        Math.round(
+            frameHeight * exportScale
+        );
+
+    const ctx =
+        canvas.getContext(
+            "2d"
+        );
+
+    ctx.imageSmoothingEnabled =
+        true;
+
+    ctx.imageSmoothingQuality =
+        "high";
+
+
+    const naturalWidth =
+        img.naturalWidth;
+
+    const naturalHeight =
+        img.naturalHeight;
+
+    if (
+        !naturalWidth ||
+        !naturalHeight
+    ) {
+
+        return canvas;
+
     }
 
 
-    const link =
-    document.createElement("a");
+    const userScale =
+        Number(
+            img.dataset.scale || 1
+        );
+
+    const xPercent =
+        Number(
+            img.dataset.x || 0
+        );
+
+    const yPercent =
+        Number(
+            img.dataset.y || 0
+        );
 
 
-    link.download =
-    `${
-        usernameInput.value
-        || "instagram-profile"
-    }.png`;
+    /*
+       object-fit: cover 기본 배율
+    */
+
+    const coverScale =
+        Math.max(
+            frameWidth / naturalWidth,
+            frameHeight / naturalHeight
+        );
 
 
-    link.href =
-    canvas.toDataURL(
-        "image/png"
+    /*
+       사용자 확대까지 적용
+    */
+
+    const finalScale =
+        coverScale * userScale;
+
+
+    const drawWidth =
+        naturalWidth * finalScale;
+
+    const drawHeight =
+        naturalHeight * finalScale;
+
+
+    /*
+       화면에서 사용하는 이동량과 동일
+    */
+
+    const maxMoveX =
+        ((userScale - 1) * frameWidth) / 2;
+
+    const maxMoveY =
+        ((userScale - 1) * frameHeight) / 2;
+
+    const moveX =
+        (xPercent / 100) * maxMoveX;
+
+    const moveY =
+        (yPercent / 100) * maxMoveY;
+
+
+    const drawX =
+        (
+            (frameWidth - drawWidth) / 2
+            + moveX
+        );
+
+    const drawY =
+        (
+            (frameHeight - drawHeight) / 2
+            + moveY
+        );
+
+
+    ctx.scale(
+        exportScale,
+        exportScale
     );
 
 
-    link.click();
+    ctx.drawImage(
+        img,
+        drawX,
+        drawY,
+        drawWidth,
+        drawHeight
+    );
+
+
+    return canvas;
+
+}
+
+/* =====================================================
+   저장 직전 모든 사진 고정
+===================================================== */
+
+function freezeAllAdjustedImages() {
+
+    const restores =
+        [];
+
+    const frames =
+        Array.from(
+            document.querySelectorAll(
+                "#captureArea .image-frame"
+            )
+        );
+
+
+    frames.forEach(frame => {
+
+        const img =
+            frame.querySelector(
+                ".adjustable-image"
+            );
+
+        if (!img) return;
+
+
+        const canvas =
+            makeFrozenCanvas(
+                frame,
+                img
+            );
+
+
+        const oldDisplay =
+            img.style.display;
+
+
+        img.style.display =
+            "none";
+
+
+        frame.appendChild(
+            canvas
+        );
+
+
+        restores.push(() => {
+
+            canvas.remove();
+
+            img.style.display =
+                oldDisplay;
+
+        });
+
+    });
+
+
+    return () => {
+
+        restores.forEach(fn => fn());
+
+    };
+
+}
+
+/* =====================================================
+   고해상도 PNG 저장
+===================================================== */
+
+const saveButton =
+    document.getElementById(
+        "saveButton"
+    );
+
+
+saveButton.addEventListener(
+"click",
+async () => {
+
+    saveButton.disabled =
+        true;
+
+    const oldText =
+        saveButton.textContent;
+
+    saveButton.textContent =
+        "고화질 PNG 만드는 중...";
+
+
+    let restoreFrozenImages =
+        null;
+
+    const selected =
+        document.querySelector(
+            ".selected-image"
+        );
+
+
+    try {
+
+        /*
+           폰트 로딩 완료까지 대기
+        */
+
+        if (document.fonts?.ready) {
+            await document.fonts.ready;
+        }
+
+
+        /*
+           이미지 로딩 완료 대기
+        */
+
+        await waitForAllImages();
+
+
+        /*
+           선택 파란 테두리 제거
+        */
+
+        if (selected) {
+
+            selected.classList.remove(
+                "selected-image"
+            );
+
+        }
+
+
+        /*
+           사진 위치를 고해상도 캔버스로 고정
+        */
+
+        restoreFrozenImages =
+            freezeAllAdjustedImages();
+
+
+        /*
+           한 프레임 기다려서 DOM 반영
+        */
+
+        await new Promise(resolve => {
+            requestAnimationFrame(() => {
+                requestAnimationFrame(resolve);
+            });
+        });
+
+
+        const target =
+            document.getElementById(
+                "captureArea"
+            );
+
+
+        /*
+           4배 해상도로 PNG 생성
+        */
+
+        const dataUrl =
+            await htmlToImage.toPng(
+                target,
+                {
+                    pixelRatio: 4,
+                    cacheBust: true,
+                    backgroundColor: "#ffffff",
+
+                    width:
+                        target.offsetWidth,
+
+                    height:
+                        target.offsetHeight,
+
+                    style: {
+                        transform: "none",
+                        transformOrigin: "top left"
+                    }
+                }
+            );
+
+
+        const link =
+            document.createElement(
+                "a"
+            );
+
+
+        link.download =
+            `${
+                usernameInput.value
+                || "instagram-profile"
+            }-HD.png`;
+
+
+        link.href =
+            dataUrl;
+
+
+        link.click();
+
+    }
+
+    catch(error) {
+
+        console.error(error);
+
+        alert(
+            "PNG 저장 중 오류가 발생했어. 잠시 후 다시 시도해줘."
+        );
+
+    }
+
+    finally {
+
+        /*
+           임시 고정 캔버스 제거
+        */
+
+        if (restoreFrozenImages) {
+
+            restoreFrozenImages();
+
+        }
+
+
+        /*
+           파란 선택선 복구
+        */
+
+        if (selected) {
+
+            selected.classList.add(
+                "selected-image"
+            );
+
+        }
+
+
+        saveButton.disabled =
+            false;
+
+        saveButton.textContent =
+            oldText;
+
+    }
 
 });
 
